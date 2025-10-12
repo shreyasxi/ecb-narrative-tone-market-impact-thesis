@@ -5,7 +5,7 @@
 
 **Author:** Shreyas Urgunde  
 **Institution:** Warwick Business School  
-**Supervisor:** Philippe Mueller
+**Supervisor:** Philippe Mueller  
 **Date:** September 2025
 
 **📄 Paper:**  
