@@ -27,12 +27,40 @@ It primarily constitues:
 
 ---
 
-## Key findings
-
-| | |
-|---|---|
-| **Channel heterogeneity** — Largest in **statements/Accounts**; **Q&A** lifts **equities**. | **Asset sensitivity** — **Rates/spreads** react more than **equities/FX**. |
-| **Intraday vs daily** — Peak near announcements; fade by close; **Accounts/speeches** persist. | **State dependence (CISS)** — Impact falls with stress; stronger when calm. |
-| **Policy vs tone** — **Target/FG/QE** drive most moves; tone adds clarity. | **Robustness** — Holds with **alt dictionaries**, **policy-free tone**, **pre/post-COVID**, **alt windows**. |
+<h2>Key findings</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Topic</th>
+      <th>Finding</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Channel heterogeneity</strong></td>
+      <td>Strongest incremental effects in <strong>policy statements</strong> and <strong>Accounts</strong>; <strong>press-conference Q&amp;A</strong> shows a selective <strong>equity</strong> response.</td>
+    </tr>
+    <tr>
+      <td><strong>Asset sensitivity</strong></td>
+      <td><strong>Rates &amp; sovereign spreads</strong> react more than <strong>equities/FX</strong>; equity/FX effects are smaller and less persistent.</td>
+    </tr>
+    <tr>
+      <td><strong>Intraday vs daily</strong></td>
+      <td>Effects peak <strong>around announcements</strong>; by the <strong>daily close</strong> most attenuate, with <strong>Accounts/speeches</strong> showing the most persistence.</td>
+    </tr>
+    <tr>
+      <td><strong>State dependence (CISS)</strong></td>
+      <td>Tone’s impact <strong>dampens as stress rises</strong> and <strong>strengthens in calmer regimes</strong>.</td>
+    </tr>
+    <tr>
+      <td><strong>Policy news vs tone</strong></td>
+      <td><strong>Target / FG / QE</strong> shocks explain most variation; tone adds <strong>incrementally</strong> by clarifying policy intent.</td>
+    </tr>
+    <tr>
+      <td><strong>Robustness</strong></td>
+      <td>Holds with <strong>alternative dictionaries</strong>, <strong>policy-free (orthogonalized) tone</strong>, <strong>pre/post-COVID</strong> splits, and <strong>alternative event windows</strong>.</td>
+    </tr>
+  </tbody>
+</table>
 
 
