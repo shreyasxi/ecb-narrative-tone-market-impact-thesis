@@ -22,7 +22,8 @@ It primarily constitues:
 - **Event timing & high-frequency identification:** Intraday reactions are measured in tightly defined windows taken from the EA-MPD and EA-CED datasets to precisely time announcements, use high-frequency returns to isolate immediate market moves, and extract policy-news factors via PCA.
 - **Isolating pure tone effects:** Separate narrative tone from contemporaneous policy surprises (Target/FG/QE) to recover the tone-only impact.
 - **Daily persistence:** Building on intraday analysis using EA-MPD and EA-CED, I re-estimate on daily changes to test whether tone effects persist beyond the announcement window and survive broader market noise.
-- **State dependence:** Interact tone with the ECB Composite Indicator of Systemic Stress (CISS) to assess whether effects amplify in calm periods and dampen under stress; report marginal effects across stress regimes.
+- **State dependence:** Interact tone with the ECB CISS to gauge how tone’s impact varies with financial stress.
+- **Robustness & reproducibility:** Verify results with alternative tone dictionaries, orthogonalized (“policy-free”) tone, and subsample analysis (pre/post-COVID).
 
 ---
 
