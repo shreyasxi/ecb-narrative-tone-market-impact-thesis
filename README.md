@@ -27,7 +27,7 @@ It primarily constitues:
 
 ---
 
-<h2>Key findings</h2>
+<h2>💡Key findings</h2>
 <table>
   <thead>
     <tr>
@@ -56,11 +56,11 @@ It primarily constitues:
       <td><strong>Policy news vs tone</strong></td>
       <td><strong>Target / FG / QE</strong> shocks explain most variation; tone adds <strong>incrementally</strong> by clarifying policy intent.</td>
     </tr>
-    <tr>
-      <td><strong>Robustness</strong></td>
-      <td>Holds with <strong>alternative dictionaries</strong>, <strong>policy-free (orthogonalized) tone</strong>, <strong>pre/post-COVID</strong> splits, and <strong>alternative event windows</strong>.</td>
-    </tr>
   </tbody>
 </table>
+
+---
+
+
 
 
