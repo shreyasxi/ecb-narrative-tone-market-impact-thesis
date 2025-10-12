@@ -2,14 +2,13 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 ![Python](https://img.shields.io/badge/python-3.10+-blue)
-![Jupyter](https://img.shields.io/badge/Jupyter-Notebook-orange)
 
 **Author:** Shreyas Urgunde  
-**Degree:** MSc Finance  
 **Institution:** Warwick Business School  
-**Date:** 2025
+**Supervisor:** Philippe Mueller
+**Date:** September 2025
 
-**📄 Paper (PDF):**  
+**📄 Paper:**  
 👉 [View the dissertation](https://shreyasxi.github.io/ecb-narrative-tone-market-impact-thesis/) 
 
 ---
