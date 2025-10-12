@@ -1,0 +1,2243 @@
+\documentclass[12pt,a4paper]{article}
+
+%=================================================================================%
+% PREAMBLE
+%=================================================================================%
+% ---- Document Layout and Fonts ----
+\usepackage{lmodern}
+\usepackage[margin=1in]{geometry}
+\usepackage{setspace}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{bbm}
+\usepackage[section]{placeins}
+
+% Caption styling (applies to all floats)
+\usepackage{caption}
+\captionsetup{
+  font=small,
+  labelfont=bf,
+  justification=justified,
+  singlelinecheck=false,
+  skip=6pt           
+}
+% Put captions at the TOP for all figures and tables
+\captionsetup[figure]{position=top}
+\captionsetup[table]{position=top}
+
+
+% ---- Packages for Tables ----
+\usepackage{booktabs}           
+\usepackage{tabularx}           
+\usepackage{array}              % Required for creating new column types
+\usepackage{ragged2e}          
+\usepackage[flushleft]{threeparttable} % For the table notes
+\usepackage{longtable} 
+% --- for the timeline figure ---
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,calc,positioning,decorations.pathreplacing}
+\usepackage{subcaption} 
+\usepackage{float}
+
+% Add these two lines to customize the subfigure labels
+\captionsetup[subfigure]{labelformat=simple, labelsep=colon}
+\renewcommand{\thesubfigure}{Panel \Alph{subfigure}}
+
+\usepackage{makecell}
+
+
+% ---- Other Essential Packages ----
+\usepackage{graphicx}           % For including images
+% Math packages + helpful shortcuts
+\usepackage{amsmath, amssymb, amsfonts, mathtools}
+\newcommand{\R}{\mathbb{R}}      % real numbers
+
+\newcommand{\MPDPR}{\text{MPD--PR}}
+\newcommand{\MPDPC}{\text{MPD--PC}}
+\newcommand{\ACC}{\text{ACC}}
+\newcommand{\SPC}{\text{SPC}}
+
+\usepackage[round]{natbib}
+
+
+\newcolumntype{L}[1]{>{\RaggedRight\arraybackslash}p{#1}}
+\newcolumntype{Y}{>{\RaggedRight\arraybackslash}X}
+
+% ---- Document-Specific Settings ----
+\captionsetup[table]{labelfont=bf}
+
+% Hyperlinks and Colors (with individual color settings) -- CORRECTED
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,     % Default color for internal links (tables, figures, equations)
+    citecolor=blue,     % Color for bibliography citations
+    urlcolor=blue       % Color for external URLs
+}
+
+% Numbers in tables
+\usepackage{siunitx}
+\sisetup{
+  detect-all,
+  input-signs = + -,
+  table-number-alignment = center,
+  table-figures-integer = 4,
+  table-figures-decimal = 3
+}
+
+% --- helper macros (safe: only define if missing) ---
+\providecommand{\sym}[1]{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\providecommand{\est}[3]{#1\,[#2]\sym{#3}}
+\providecommand{\Ftarget}{$F_{\text{target}}$}
+\providecommand{\Ffg}{$F_{\text{fg}}$}
+\providecommand{\Fqe}{$F_{\text{qe}}$}
+
+
+% --- Needed for shaded sentence panels ---
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\tcbset{
+  colframe=black!10,
+  colback=white,
+  boxsep=2.5mm, arc=1.5mm,
+  left=2mm, right=2mm, top=2mm, bottom=2mm
+}
+
+% ECB-ish palette used in the exemplar figure
+\definecolor{ecbBlue}{RGB}{0,68,136}
+\definecolor{ecbLight}{RGB}{230,240,250}
+\definecolor{hawkShade}{RGB}{240,248,255}
+\definecolor{doveShade}{RGB}{248,248,248}
+\definecolor{myorange}{RGB}{255, 127, 14} 
+
+% ---- Custom Color Palette for Revamped Figure ----
+\definecolor{hawkRed}{HTML}{B94A48}  
+\definecolor{doveBlue}{HTML}{3A87AD}
+
+% This defines the new 'statementbox' environment used in the revamped code.
+\newtcolorbox{statementbox}[2][]{
+    enhanced,
+    colback=#2!10,            % Light background color (10% tint)
+    colframe=#2,              % Frame color
+    fonttitle=\bfseries,
+    colbacktitle=#2,          % Background color of the title bar
+    coltitle=white,           % Text color of the title bar
+    arc=3mm,                  % Rounded corners
+    drop shadow={black!30},   % A subtle shadow for depth
+    #1                        % Allows for additional options to be passed
+}
+
+% Spacing
+\onehalfspacing
+\renewcommand{\arraystretch}{1.2}
+
+% Header and Footer Setup (with Dynamic Section Title)
+\pagestyle{fancy}
+\fancyhf{} % Clear all header and footer fields
+\lhead{The Differential Market Impact of ECB Narrative Tone}
+\cfoot{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% Section Title Formatting
+\titleformat{\section}{\normalfont\Large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalfont\large\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalfont\normalsize\bfseries}{\thesubsubsection}{1em}{}
+
+
+%=================================================================================%
+% BEGIN DOCUMENT
+%=================================================================================%
+\begin{document}
+
+
+% --- TITLE PAGE ---
+
+\begin{titlepage}
+    \centering
+    \begingroup
+      \setstretch{1.2}
+
+      % Logo at the top
+      \vspace*{1cm}
+      \includegraphics[width=0.32\textwidth]{variation1.pdf}\par
+
+      % Title
+      \vspace{1.8cm}
+      {\LARGE \bfseries
+      The Differential Market Impact of ECB\\
+      Narrative Tone Across Communication Channels\par}
+
+      % Author info
+      \vspace{1cm}
+      {\large by \par}
+      \vspace{0.5cm}
+      {\Large \bfseries Shreyas Urgunde\par}
+
+      % Submission line (two lines, italic)
+      \vspace{1.5cm}
+      {\itshape 
+      A dissertation submitted in partial fulfilment\\
+      of the requirements for the degree of\par}
+
+      % Degree
+      \vspace{0.8cm}
+      {\Large \bfseries Master of Science in Finance \par}
+
+      % Institution and date
+      \vfill
+
+      {\large Supervisor: Philippe Mueller\par}
+      \vspace{0.1cm}
+      {\large Warwick Business School\par}
+
+      \vspace{0.1cm}
+      {\large September 2025\par}
+
+    \endgroup
+\end{titlepage}
+
+
+\newpage
+\pagenumbering{roman} % Roman numerals for abstract/contents
+
+% --- ABSTRACT PAGE ---
+\thispagestyle{empty} % No header/footer on this page
+
+\begingroup 
+\renewcommand{\thefootnote}{\fnsymbol{footnote}} 
+
+\begin{center}
+    {\LARGE \textbf{The Differential Market Impact of ECB Narrative Tone Across Communication Channels}\footnote{I am deeply grateful to my supervisor, Professor Philippe Mueller, for his guidance, patience, and constructive feedback throughout this work. All remaining errors are my own responsibility.}\par}
+    \vspace{1cm}
+    {\large Shreyas Urgunde\footnote{MSc Finance Candidate at Warwick Business School. \textbf{Email:} shreyas.urgunde@warwick.ac.uk. \textbf{Student ID}: 5582804.  Data and replication code for this study will be made publicly available on GitHub once the board of examiners approves the marks in November.}\par}
+    \vspace{0.5cm}
+    {\large September 2025\par}
+\end{center}
+
+\endgroup 
+
+\vspace{1cm}
+
+\begin{abstract}
+    \noindent
+    In this dissertation, I examine the market impact of narrative tone in European Central Bank (ECB) communications across multiple channels. Using a hawk–dove tone index constructed from Monetary Policy Statements, press conferences, Monetary Policy Accounts, and Executive Board speeches, I assess its effect on euro area financial markets at both intraday and daily frequencies. The findings show that intraday reactions are driven primarily by substantive policy news, with tone exerting a modest positive effect on equities in the press-conference channel. At the daily horizon, tone effects fade or even reverse, with sensitivity limited to speeches and to the Monetary Policy Accounts, where tone influences returns under average systemic stress but loses traction as stress rises. Overall, I conclude that tone can influence asset prices in specific contexts, but its role remains secondary to the hard policy signals embedded in monetary decisions. 
+\end{abstract}
+
+\vspace{1.5cm}
+\noindent\textbf{Keywords:} Central Bank Communication, Monetary Policy, Narrative Tone, Eurozone, Event Study, ECB.
+\vspace{0.5cm}
+
+\noindent\textbf{JEL Classification:} E52, E58, G14.
+
+\vfill % Pushes the content to the top of the page
+
+\hypersetup{linkcolor=black}
+
+\tableofcontents
+\newpage
+\listoftables
+\newpage
+\listoffigures
+\newpage
+
+% --- Switch link colors back to BLUE for the main document ---
+\hypersetup{linkcolor=blue}
+
+\pagenumbering{arabic} % Arabic numerals for the main body
+
+%=================================================================================%
+% 1. INTRODUCTION
+%=================================================================================%
+\section{Introduction}
+\label{sec:introduction}
+
+Central bank communication has moved from opaque signalling to a deliberately structured policy instrument that shapes expectations and transmission. This evolution reflects a broader drive for transparency in objectives, models, and decision processes, and it gained prominence as conventional tools reached their lower bounds and balance-sheet policies took centre stage \citep{geraats2002,filardo2014}. In this setting, language itself becomes part of the toolkit, as carefully calibrated guidance on policy rates and the balance sheet can move asset prices and anchor expectations in ways that rate changes alone cannot.
+
+The European Central Bank (ECB) exemplifies this trajectory through its multi-channel framework: Monetary Policy Statements, live Press Conferences, Monetary Policy Accounts, and Executive Board speeches. Each channel differs in timing, authorship, and institutional weight, and markets interpret them asymmetrically. From 2013 onward, the ECB also introduced explicit forward guidance, making communication an integral lever of policy. This development mirrors global evidence that guidance and narrative have become core to modern monetary policy \citep{Jeanneau2009}. 
+
+Against this backdrop, my dissertation examines whether narrative tone conveys incremental information beyond policy surprises and whether such content is specific to particular channels. The analysis is structured around five central questions: (i) does tone provide explanatory power beyond policy-surprise factors (Target, Forward Guidance, QE)? (ii) do any effects differ across communication channels? (iii) which asset classes are most responsive? (iv) do tone effects observed intraday persist through to daily returns? and (v) are these effects state-dependent, particularly during crisis periods? These questions guide the empirical design and demonstrate when, where, and to what extent communication tone matters for monetary transmission.
+ 
+To address these research questions, I construct a dataset that combines ECB communication events with both high-frequency and daily financial market data. Narrative tone is measured using a dictionary-based approach, following the methodology of \citet{Tadle2022} and the ECB-specific lexicons of \citet{KaminskasJurksas2024}. These tone indices are then merged with intraday policy surprises from the Euro Area Monetary Policy Event-Study Database (EA-MPD; \citealp{Altavilla2019}) and the Euro Area Communication Event-Study Database (EA-CED; \citealp{Istrefi2024}). This design allows the role of tone to be isolated from simultaneous policy-news shocks and enables its impact to be traced across a broad set of asset classes.
+
+The core results establish a clear hierarchy in the information content of ECB communications. Across both intraday and daily horizons, asset prices respond most systematically to structured policy surprises (Target, Forward Guidance, and QE factors), which map cleanly onto the term structure of interest rates and also drive credit and sovereign spreads. Narrative tone, by contrast, plays a more limited and context-dependent role. It exerts a modest positive effect on equities during press-conference Q\&A, consistent with the idea that investors interpret verbal nuance as conveying private information about the outlook. At the daily horizon, however, these effects fade and in some cases reverse, with tone sensitivity detected only in speeches and in the Monetary Policy Accounts. Overall, the evidence shows that tone can matter for monetary transmission, but it remains secondary to the hard policy signals embedded in decisions.
+
+The rest of the dissertation proceeds as follows: Section \ref{sec:literature} reviews the related literature and positions the contribution within the broader field. Section \ref{sec:data} introduces the data sources and Section \ref{Methodology} sets out the empirical methodology. Section \ref{sec:results} presents the core results, followed by robustness checks in Section \ref{sec:robustness}. Section \ref{limitations} outlines the main limitations and Section \ref{sec:conclusion} concludes.
+
+%=================================================================================%
+% 2. LITERATURE REVIEW
+%=================================================================================%
+\section{Literature Review and Hypothesis Development}
+\label{sec:literature}
+
+This dissertation is built on several complementary strands of the literature. 
+
+First, it draws upon work that positions central bank communication as an active instrument of monetary policy, 
+reflecting the broader shift from opacity to transparency as expectations management became central to monetary transmission \citep{blinder2008}. 
+In this context, the language of policy is crucial. \citet{ehrmann2020} note that central bank statements are carefully drafted through multiple iterations, 
+since word choice and semantic coherence can shape how markets interpret the message and the volatility that follows. The relationship is inherently two-way: authorities influence market pricing while simultaneously incorporating market signals into their decision-making \citep{deguindos2019}. 
+Within this dynamic, tone conveys incremental information about policy assessments and the economic outlook beyond what is reflected in contemporaneous quantitative releases \citep{hubertlabondance2021}. Likewise, \citet{Parle2022} argues that tone can disclose private information about economic conditions, prompting markets to update their beliefs.
+
+Second, it relates to the growing literature that shows the tone of central bank communication has measurable effects on financial markets. 
+In the euro area, a more positive tone in press conferences is associated with increases in stock prices \citep{Parle2022}. \citet{schmeling2024} confirm these findings and further show that positive tone surprises are linked to higher interest rates alongside declines in credit spreads and volatility risk premia. Earlier studies such as \citet{KohnSack2003} and \citet{reevessawicki2007} found little evidence that ad hoc communication such as policymakers’ speeches influenced markets. However, more recent research shows that a wider range of communication events does affect financial markets. \citet{Istrefi2024} report that inter-meeting communication events are linked to significant market movements, sometimes even larger than those following ECB policy announcements, especially at longer maturities of the yield curve. \citet{ahrens2025} also find that Executive Board speeches transmit monetary policy news that shapes bond and stock market volatility and tail risk. Recent evidence from \citet{KaminskasJurksas2024} also shows that Executive Board speeches significantly shape movements in euro-area risk-free rates, 
+as markets interpret them as clarifying the ECB’s reaction function rather than providing commentary on the immediate economic outlook. 
+Comparable findings emerge for the Federal Reserve: \citet{gorodnichenko2023} document that a more optimistic tone from Fed speakers supports equity valuations, 
+and \citet{cannon2015} shows that the tone of FOMC minutes correlates with contemporaneous measures of economic activity, pointing to an information channel.
+
+A further body of work examines the different techniques that have been employed to assess the tone of central bank communication. 
+Early contributions relied on manual approaches, such as \citet{RomerRomer1989}, who classified policy texts along a dovish--hawkish scale 
+and \citet{MusardGies2006}, who coded ECB statements to show that shifts in tone were associated with short-term interest rate movements. These studies along with \cite{gertlerhorvath2018} established that qualitative assessments of tone carry predictive power for markets, but their reliance on human judgement and the lack of reproducibility imposed clear limitations. More recent research has therefore turned to automated methods: \citet{lucca2009} introduced semantic scoring to quantify FOMC communication, while dictionary-based approaches such as \citet{loughran2011}, \citet{Banerjee2019}, and \citet{shapiro2020} classified tone in a systematic manner. However, as \citet{picault2017} notes, the use of general-purpose dictionaries often leads to misclassification of technical terms, and the use of field-specific lexicons improves the prediction of policy decisions. Building on this, \citet{Tadle2022} proposed a domain-specific monetary policy dictionary for FOMC minutes, combining predefined hawkish and dovish terms with polarity rules to construct sentiment indices. \citet{KaminskasJurksas2024} extend this approach to the ECB by developing lexicons tailored to transcripts and media coverage of ECB events. In this dissertation, I adopt Tadle’s methodological framework while drawing on the ECB-specific lexicons of \citet{KaminskasJurksas2024}, thus combining a robust classification method that captures the nuances of ECB communication.
+
+Furthermore, this dissertation is heavily based on research that disentangles the different factors embedded in monetary policy surprises using high-frequency data. 
+\citet{GurkaynakSackSwanson2005} first showed for the FOMC that financial markets react not only to the current policy rate decision (the "target" factor) but also to shifts in the expected policy path. In the euro area, this approach was formalised through the Euro Area Monetary Policy Event-Study Database (EA-MPD) developed by \citet{Altavilla2019}. Their work demonstrated that surprises around ECB Governing Council announcements and press conferences can be decomposed into four distinct factors\footnote{Additional extensions have also been proposed in the literature. For example, \citet{Mikaliunaite2020} identify a perception factor capturing cross-country heterogeneity in yields, 
+while \citet{leombroni2021} highlight a credit-risk channel that became particularly relevant during the sovereign debt crisis.}: target, timing, forward guidance, and quantitative easing. Building on these insights, \citet{Istrefi2024} were the first to introduce the Euro Area Communication Event-Study Database (EA-CED), which extends analysis beyond scheduled policy meetings to include more than 5,000 inter-meeting events such as speeches and interviews. 
+Their work shows that these communications can move markets as strongly as formal announcements, with yield-curve responses well explained by three structural factors: target, forward guidance, and QE.
+
+Finally, a segment of the literature emphasises that the effects of central bank communication are state-dependent and become stronger in stressed market environments. 
+\citet{schmeling2024} show that a more positive tone lowers volatility through the risk-premia channel, while \citet{ApergisPragidis2019} find that such effects are amplified during crisis periods. 
+\citet{gertlerhorvath2018} similarly document that signals of policy easing or a worsening outlook can trigger negative stock market and interest rate responses in stressed conditions. 
+In sovereign bond markets, \citet{hayo2014} and \citet{hubertlabondance2021} both find that communication effects on yields are significantly larger during episodes of financial distress. 
+Related work shows that communication under uncertainty plays a distinct clarifying role: \citet{EhrmannFratzscher2009} find that the Q\&A component of ECB press conferences becomes especially powerful when uncertainty is elevated. 
+Likewise, \citet{havlik2022} add further support by showing that ECB announcements during the pandemic were particularly effective in stabilising markets.
+
+This extensive review of the literature motivates me to investigate open questions about the differential market impact of the narrative tone of the ECB across communication channels
+and the empirical analysis in Section~\ref{sec:results} addresses the following hypotheses:
+
+\begin{itemize}
+    \item \textbf{H1:} Within-channel tone has a measurable effect on financial markets.  
+    \item \textbf{H2:} The effect of tone differs systematically across communication channels.  
+    \item \textbf{H3:} Tone conveys incremental information beyond quantitative policy surprises.  
+    \item \textbf{H4:} Tone effects are amplified during periods of financial stress.  
+\end{itemize}
+
+%=================================================================================%
+% 3. DATA
+%=================================================================================%
+\section{Data}
+\label{sec:data}
+
+This study is based on a novel dataset constructed by combining high-frequency textual communications from the European Central Bank (ECB) with benchmark datasets of financial market reactions for the period spanning from \textbf{January 1, 2015, to December 31, 2024}. This section describes the two primary types of data used: textual communication data, from which the key independent variables (narrative tone indices) are derived, and financial market data, which serve as the dependent variables measuring market reactions.
+
+\subsection{Textual Communication Data}
+
+The study's key independent variables, the narrative tone indices, are derived from a comprehensive corpus of ECB textual communications. These texts were collected from the official ECB website\footnote{Available at: \url{https://www.ecb.europa.eu/press/html/index.en.html}}. For robustness, speeches were also sourced and cross-referenced from the Bank for International Settlements (BIS) data repository using the \texttt{gingado} Python library\footnote{See the documentation at: \url{https://bis-med-it.github.io/gingado/}}. As detailed in Appendix \ref{comptable}, the resulting tone indices show a strong correspondence across sources, which validates my measurement approach. The analysis focuses on four distinct communication channels:
+
+\begin{enumerate}
+    \item \textbf{Monetary Policy Decisions (MPD):} The official press releases published at 13:45 CET following each Governing Council meeting.
+    \item \textbf{Press Conferences (PC):} The full transcripts of the press conferences that follow the MPD announcement at 14.30 CET, including both the President's introductory statement and the subsequent question-and-answer session.
+    \item \textbf{Monetary Policy Accounts (ACC):} The detailed minutes providing insight into the Governing Council's deliberations, published with a four-week lag.
+    \item \textbf{Speeches (SPEECH):} Public speeches, interviews, and testimonies given by the members of the Executive Board.
+\end{enumerate}
+
+%===================================================================================================================================================================%
+
+\subsection{Financial Market Data}
+
+Financial market responses to ECB communication events are measured using a combination of intraday and daily return data. To ensure the highest accuracy, the analysis relies on two established, publicly available databases designed specifically for monetary policy event analysis. For scheduled policy announcements like Monetary Policy Decisions (MPD) and Press Conferences (PC), intraday asset price changes are sourced from the Euro Area Monetary Policy Event-Study Database\footnote{Available at: \url{https://www.ecb.europa.eu/pub/pdf/annex/Dataset_EA-MPD.xlsx}} (EA-MPD) by \citet{Altavilla2019}. For inter-meeting communications, including Monetary Policy Accounts (ACC) and Speeches (SPEECH), the intraday returns are taken from the Euro Area Communication Event-Study Database\footnote{Available at: \url{https://sites.google.com/site/istrefiklodiana/ea-ced}} (EA-CED) by \citet{Istrefi2024}. In both cases,\footnote{A minor methodological difference is that the EA-MPD by \citet{Altavilla2019} is constructed from cleansed tick-by-tick data, whereas the EA-CED by \citet{Istrefi2024} uses minute-by-minute quotes as its underlying data.} intraday returns are defined as price changes measured in narrow pre- and post-event windows.
+
+% --- THE TABLE ---
+\begin{table}[htbp]
+\centering
+\caption{Summary of Financial Market Data Sources}
+\label{tab:financial_data_sources}
+\begin{threeparttable}
+\begin{tabularx}{\textwidth}{@{} L{3.9cm} Y L{4.2cm} @{}}
+\hline\hline
+\addlinespace[3pt]
+\textbf{Data Category} & \textbf{Core Assets} & \textbf{Purpose in Study} \\
+\hline
+Intraday market reactions &
+\begin{minipage}[t]{\linewidth}\vspace{0pt}
+EURO STOXX 50\\
+EUR/USD exchange rate\\
+OIS rates (1M, 3M, 2Y, 10Y)\\
+IT--DE 10Y government bond spread
+\vspace{0pt}\end{minipage}
+& Measure high-frequency response to ECB communication tone. \\
+\addlinespace[4pt]
+Daily market indicators &
+\begin{minipage}[t]{\linewidth}\vspace{0pt}
+EURO STOXX 50\\
+EUR/USD exchange rate\\
+Euro area 2Y and 10Y benchmark yields (EUSA2, EUSA10)\\
+IT--DE 10Y futures spread\\
+HY--IG CDS spread\\
+Composite Indicator of Systemic Stress (CISS)
+\vspace{0pt}\end{minipage}
+& Assess persistence of tone effects and state-dependence across various financial markets during periods of market stress. \\
+\hline\hline
+\end{tabularx}
+
+\begin{tablenotes}[flushleft]\footnotesize
+\item[] \textit{Notes:} Intraday returns are sourced from the EA-MPD \citep{Altavilla2019} and EA-CED \citep{Istrefi2024} databases. Daily data (equities, FX, yields, futures, CDS spreads) are from Bloomberg. The Composite Indicator of Systemic Stress (CISS) is obtained from the ECB's Open Data Portal. 
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+This study focuses on a core set of seven financial assets that capture different dimensions of the monetary policy transmission mechanism. For intraday analysis, I follow the EA-MPD and EA-CED asset menus: the \textbf{EURO STOXX 50}, the \textbf{EUR/USD exchange rate}, four maturities of Overnight Index Swaps (1M, 3M, 2Y, 10Y), and the \textbf{10-year spread between Italian and German government bonds}. These series are benchmark choices in the event-study literature because they provide liquid, high-frequency measures of policy-sensitive market segments.
+
+For the daily regressions, the asset menu is adjusted to focus on broader and more consistently available indicators from Bloomberg. The panel includes the \textbf{EURO STOXX 50} and \textbf{EUR/USD} as before, the \textbf{2-year and 10-year euro area benchmark yields (EUSA2, EUSA10)} to track short- and long-horizon rate expectations, the \textbf{10-year Italian–German futures spread (BTP--Bund)} as a measure of sovereign fragmentation risk, and the \textbf{HY--IG CDS spread} (iTraxx Crossover 5Y, representing high-yield credit risk, minus iTraxx Main 5Y, representing investment-grade credit risk) as a credit risk premium proxy. This set balances equity, FX, risk-free rates, sovereign spreads, and credit premia, thereby providing a comprehensive view of the channels through which ECB communication affects markets. The \textbf{Composite Indicator of Systemic Stress (CISS)} from the ECB’s Open Data Portal is used as the key conditioning variable for state-dependent effects.
+
+
+%=================================================================================%
+% 4. METHODOLOGY
+%=================================================================================%
+\section{Methodology}
+\label{Methodology}
+
+\subsection{Sentiment Methodology: Dictionary-based Hawk Index}
+\label{sec:method_tone}
+
+The study's key independent variables, the narrative tone indices, are derived from a comprehensive corpus of ECB textual communications. To quantify the sentiment of these documents, I employ a dictionary-based approach that follows \citet{Parle2022}, which formalizes the central-bank text methodology in \citet{Tadle2022}. The crucial departure from \citet{Parle2022} is the lexicon: rather than using the original lists in \citet{Tadle2022}, I adopt ECB-specific lexicons developed by \citet{KaminskasJurksas2024}. Their lists are built from words that appear frequently in ECB communications and are tailored to the ECB’s ad hoc style.
+
+\begin{equation}
+\label{eq:sent_score}
+\text{sent}_{i,t}=
+\begin{cases}
++1 & \text{if } \text{neut}_{i,t}>\text{pess}_{i,t} \text{ and } \text{pos}_{i,t}>\text{neg}_{i,t},\\
+-1 & \text{if } \text{neut}_{i,t}>\text{pess}_{i,t} \text{ and } \text{pos}_{i,t}<\text{neg}_{i,t},\\
++1 & \text{if } \text{neut}_{i,t}<\text{pess}_{i,t} \text{ and } \text{pos}_{i,t}<\text{neg}_{i,t},\\
+-1 & \text{if } \text{neut}_{i,t}<\text{pess}_{i,t} \text{ and } \text{pos}_{i,t}>\text{neg}_{i,t},\\
+0  & \text{otherwise.}
+\end{cases}
+\end{equation}
+
+The scoring logic mirrors the sentence-level rules in \citet{Parle2022}. Each sentence is evaluated along two dimensions: (i) an economic dimension using two sets of economic terms (neutral economic and pessimistic economic) to infer whether the base content signals neutral versus downward macro pressures, and (ii) a polarity dimension using positive and negative qualifiers. Combining these dimensions classifies a sentence as \emph{hawkish} when neutral-economic content is paired with positive polarity, or when pessimistic content is paired with negative polarity; \emph{dovish} when neutral content is paired with negative polarity, or pessimistic content with positive polarity; and \emph{neutral} otherwise. Sentences that contain no economic terms are excluded from the analysis, since they carry little monetary-policy information.\footnote{All pre-processing choices follow the workflow in \citet{Benoit2018} and are documented in Appendix~\ref{app:preprocess}. The full ECB-adapted dictionaries (neutral-economic, pessimistic-economic, positive, negative) are reproduced in Appendix~\ref{app:dicts_neutral_pessimistic} and ~\ref{app:dicts_positive_negative}}.
+
+Formally, letting $\text{pos}_{i,t}$ and $\text{neg}_{i,t}$ denote the counts of positive and negative tone words in sentence $i$ of document $t$, and $\text{neut}_{i,t}$ and $\text{pess}_{i,t}$ the counts of neutral-economic and pessimistic-economic terms, the sentence score $\text{sent}_{i,t}\in\{-1,0,+1\}$ is
+
+Let $J_t$ be the number of sentences in document $t$ that contain at least one economic term. The raw document-level index (the Dictionary Hawk–Dove Index) is
+\begin{equation}
+\label{eq:dhdi}
+\text{DHDI}_{t} = 100 \times \frac{1}{J_t}\sum_{i=1}^{J_t} \text{sent}_{i,t},
+\end{equation}
+which lies in $[-100,100]$ by construction. For comparability across channels with different styles and variances, I convert $\text{DHDI}^{(k)}_{t}$ to a within-channel $z$-score. 
+
+
+% ===================== FIGURE + TABLE ==========================
+\begin{figure*}[t!]
+\centering
+% --- Main figure caption moved to the top ---
+\caption{Exemplar hawkish vs. dovish ECB communication, with lexicon cues}
+\label{fig:ecb_exemplar_sentences}
+
+% --------- Panel A: Hawkish Exemplar ----------
+\begin{subfigure}[b]{0.49\textwidth}
+    \captionsetup{font=bf, justification=centering}
+    \caption{Hawkish Exemplar}
+    \begin{statementbox}[title=Christine Lagarde's Speech (7 Feb 2022)]{hawkRed}
+        \begin{quote}
+        \itshape
+        “\textbf{\underline{Inflation}} has risen sharply in recent months and it further surprised on the upside in January, with the rate \textbf{\underline{increasing}} to 5.1 per cent from 5.0 per cent in December.”
+        \end{quote}
+        \vspace*{\fill} 
+        \hrule
+        \footnotesize
+        \textbf{Score:} \textcolor{hawkRed}{\textbf{+1}} (hawkish)
+    \end{statementbox}
+\end{subfigure}
+\hfill
+% --------- Panel B: Dovish Exemplar ----------
+\begin{subfigure}[b]{0.49\textwidth}
+    \captionsetup{font=bf, justification=centering}
+    \caption{Dovish Exemplar}
+    \begin{statementbox}[title=ECB Press Conference (22 Jan 2015)]{doveBlue}
+        \begin{quote}
+        \itshape
+        “Thus adoption of balance sheet measures has become warranted to achieve the price stability objective, given key ECB \textbf{\underline{interest}} \textbf{\underline{rates}} have reached the \textbf{\underline{lower}} bound.”
+        \end{quote}
+        \vspace*{\fill} 
+        \hrule
+        \footnotesize
+        \textbf{Score:} \textcolor{doveBlue}{\textbf{--1}} (dovish)
+    \end{statementbox}
+\end{subfigure}
+
+\vspace{0.3em} 
+
+% ------------------ Dictionary Cues Table ------------------
+\begin{threeparttable}
+\caption*{Dictionary Cues Underlying Sentence Scores}
+\begin{tabularx}{\textwidth}{@{} l YYYY r @{}}
+\hline\hline
+% --- Headers ---
+\textbf{Exemplar} & \textsc{NEU} & \textsc{PES} & \textsc{POS} & \textsc{NEG} & \textbf{Implied Score} \\
+\hline
+Lagarde Speech    & inflation & — & increase, increasing & — & +1 \\
+Press Conference  & interest rates & balance sheet & — & lower & --1 \\
+\hline\hline
+\end{tabularx}
+
+\vspace{0.3em}
+
+\begin{tablenotes}[flushleft]
+\footnotesize
+\item \textit{Notes}: Sentences are scored using four ECB-specific lexicons developed by \cite{KaminskasJurksas2024}: neutral-economic (\textbf{NEU}), pessimistic-economic (\textbf{PES}), positive (\textbf{POS}), and negative (\textbf{NEG}). 
+The \cite{Tadle2022} scoring rule assigns a sentence score of \textbf{+1 (hawkish)} when NEU $>$ PES and POS $>$ NEG, or when PES $>$ NEU and NEG $>$ POS. 
+A score of \textbf{--1 (dovish)} is assigned when NEU $>$ PES and NEG $>$ POS, or when PES $>$ NEU and POS $>$ NEG. 
+Sentences without any economic terms are excluded, yielding a score of 0 (neutral).
+\end{tablenotes}
+\end{threeparttable}
+\end{figure*}
+
+%===============================================================================================================================================================%
+
+\subsection{Event Definition and Window Construction}
+\label{sec:event_windows}
+
+This study measures market reactions using asset returns and yield changes captured in tightly defined windows around each communication event. For Governing Council days, I use the event windows embedded in EA--MPD. The ``decision'' window isolates the 13{:}45 CET press release and the immediate adjustment that follows. The ``press--conference'' window covers the President's introductory statement and the subsequent Q\&A.
+
+For inter--meeting communications (Monetary Policy Accounts and speeches) I rely on EA--CED. Each event is paired with (i) a short pre--event window to check for drift, (ii) an event window that follows the published start and end time of the release or the speaking slot, and (iii) a brief post--event window. I use the event--study returns supplied by EA--CED rather than recomputing them myself.\footnote{A practical advantage of EA--CED is its accurate time--stamping of speeches and accounts. This precision is not available in the BIS speech archive or on the ECB website, which makes it harder there to pin down the exact intraday window. The EA--CED time stamps allow the reaction to be measured exactly within the intended window.}
+
+%=================================================================================%
+% FIGURE: Event Window Timelines 
+%=================================================================================%
+\begin{figure}[h]
+\centering
+\caption{Event Window Construction for ECB Communication}
+\label{fig:event_windows}
+
+% --- PANEL A ---
+\begin{subfigure}{\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{Panel A.png}
+    \caption{Governing Council Meeting Day Timeline}
+    \label{fig:panel_a}
+\end{subfigure}
+
+\vspace{1em} 
+
+% --- PANEL B ---
+\begin{subfigure}{\textwidth}
+    \centering
+    \includegraphics[width=0.9\linewidth]{Panel B.png} % Slightly smaller to match its style
+    \caption{Inter-Meeting Communication Event Timeline}
+    \label{fig:panel_b}
+\end{subfigure}
+
+
+\vspace{0.3cm} % Adds a bit of space before the note
+
+% --- FIGURE NOTES ---
+\begin{minipage}{0.9\textwidth}
+\footnotesize
+\textit{Note}: This figure illustrates the construction of intraday event windows used to measure asset price reactions to ECB communication. \textbf{Panel A}, adapted from \citet{Altavilla2019}, shows the timeline for a standard Governing Council meeting day, distinguishing between the policy decision and press conference windows. \textbf{Panel B}, adapted from \cite{Istrefi2024}, shows the generalized window structure for an inter-meeting communication event.
+\end{minipage}
+
+\end{figure}
+
+A critical feature of both databases is that they control for confounding macroeconomic news to better isolate the impact of ECB communication:
+\begin{itemize}\setlength\itemsep{0.2em}
+    \item \textbf{EA--MPD:} includes the U.S.\ Initial Jobless Claims surprise (IJC) as an additional control in the press--conference window. \cite{Altavilla2019} notes that including or excluding IJC does not materially change the coefficients of interest as documented in the source.
+    \item \textbf{EA--CED:} screens three sets of macro events and removes non--surprising releases: (1) major euro--area and large member--state macro releases (flash GDP and HICP, unemployment, composite PMI, industrial production flash, consumer and business surveys), (2) selected U.S.\ macro surprises (GDP, CPI, Non--Farm Payrolls, Initial Jobless Claims), and (3) FOMC decision days. If the Bloomberg survey equals the realized release, the macro event is dropped on the assumption that it did not generate a market surprise.
+\end{itemize}
+
+%=================================================================================%
+% Factor Decomposition
+%=================================================================================%
+\subsection{Factor decomposition of policy news}
+\label{sec:factor_decomp}
+
+This subsection extracts structural ``policy--news'' shocks from high-frequency OIS yield surprises using principal components, following \citet{Swanson2021}\footnote{\citet{Swanson2021} separately identifies surprise changes in the federal funds rate, forward guidance, and large-scale asset purchases (LSAPs) for each FOMC announcement from July 1991 to June 2019; \citet{Swanson2024} extend the approach to Fed Chair speeches.} and its ECB application in \citet{Istrefi2024}.
+
+For each channel/window 
+\( j \in \{\text{MPD},\, \text{PC},\, \text{ACC},\, \text{SPEECH}\} \),
+I form a matrix of standardized surprises across seven maturities 
+\( m \in \{1\text{M}, 3\text{M}, 6\text{M}, 1\text{Y}, 2\text{Y}, 5\text{Y}, 10\text{Y}\} \).
+Let \( \Delta y_t \in \mathbb{R}^{7} \) be the vector of OIS changes for event \( t = 1,\dots, T_j \) and denote by \( \mu \) and \( s \) the maturity-specific mean and standard deviation in that channel. The elementwise standardization and the event-by-maturity stacking are
+\begin{equation*}
+\begin{aligned}
+z_{t,m} &= \frac{\Delta y_{t,m} - \mu_m}{s_m},
+&\qquad
+X^{(j)} &=
+\begin{bmatrix}
+z_{1}^{\prime}\\[-2pt]
+\vdots\\[-2pt]
+z_{T_j}^{\prime}
+\end{bmatrix}
+\in \mathbb{R}^{T_j \times 7}.
+\end{aligned}
+\end{equation*}
+
+I compute a principal-components decomposition,
+\begin{equation}
+X^{(j)} \;=\; F^{(j)} \Lambda^{(j)} + e^{(j)},
+\label{eq:pca_core_fixed}
+\end{equation}
+where \( F^{(j)} \in \mathbb{R}^{T_j \times 3} \) contains the first three component scores (one row per event), \( \Lambda^{(j)} \in \mathbb{R}^{3 \times 7} \) are the loadings, and \( e^{(j)} \) are residuals. Because raw PCs have no direct economic interpretation, I apply an orthogonal rotation,
+\begin{equation}
+F^{(j)}_{\!*} \;=\; F^{(j)} H^{*}, 
+\qquad 
+\Lambda^{(j)}_{\!*} \;=\; (H^{*})^{\!\top}\, \Lambda^{(j)},
+\label{eq:rotation_fixed}
+\end{equation}
+with \( H^{*} \) chosen so that: (i) the first column loads most on the short end (policy target), (ii) the second concentrates on the 3M-2Y belly (forward guidance), and (iii) the third loads on the long end (QE). Signs are set for interpretability (positive at 1M for the target factor and positive at 10Y for the QE factor). The resulting unit-variance series are denoted \( F_{\text{target}}, F_{\text{fg}}, F_{\text{qe}} \).
+
+The orthogonal rotation ensures that the three principal components map cleanly onto economically interpretable dimensions of policy news. Figure~\ref{fig:rotload_2x2} illustrates this structure by plotting the rotated loadings across OIS maturities for each communication channel. The loadings confirm the intended interpretation:
+\begin{itemize}
+  \item \textbf{Target factor} (\(F_{\text{target}}\)): news about the current policy-rate stance; strongest effects at the very short end.
+  \item \textbf{Forward-guidance factor} (\(F_{\text{fg}}\)): news about the expected path of policy rates; loads heavily on the intermediate maturities (3M–2Y).
+  \item \textbf{QE (term-premium) factor} (\(F_{\text{qe}}\)): loads at the long end of the curve, reflecting information about balance-sheet policy and duration risk.
+\end{itemize}
+
+
+\begin{figure}[t]
+\caption{Rotated policy-factor loadings across the OIS curve by communication channel.}
+  \label{fig:rotload_2x2}
+  \centering
+  \captionsetup{font=small}
+
+  % -------- Top row --------
+  \begin{subfigure}{0.47\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{F1_Press_Release.pdf}
+    \caption{Press Release (MPD)}
+    \label{fig:rotload_pr}
+  \end{subfigure}\hfill
+  \begin{subfigure}{0.47\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{F2_Press_Conference.pdf}
+    \caption{Press Conference (MPD\_PC)}
+    \label{fig:rotload_pc}
+  \end{subfigure}
+
+  \vspace{0.65em}
+
+  % -------- Bottom row --------
+  \begin{subfigure}{0.47\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{F3_Accounts.pdf}
+    \caption{Monetary Policy Accounts (ACC)}
+    \label{fig:rotload_acc}
+  \end{subfigure}\hfill
+  \begin{subfigure}{0.47\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{F4_Speeches.pdf}
+    \caption{Speeches}
+    \label{fig:rotload_speech}
+  \end{subfigure}
+
+  \vspace{0.3em}
+  \begin{minipage}{0.97\textwidth}
+    \footnotesize
+    \textit{Notes}: Each panel plots the loadings of the three rotated intraday policy factors across OIS maturities
+    (1M–10Y): \emph{Target} (solid, circles), \emph{Forward Guidance} (dashed, squares), and \emph{QE} (dotted, triangles).
+    Loadings are unitless
+    and indicate which maturities move most for a unit shock to each factor. It is constructed as per the methodology provided by \cite{Swanson2021} for Federal Reserve Communications. 
+  \end{minipage}
+\end{figure}
+
+
+
+\FloatBarrier
+%==================== 2.3 Econometric specifications ====================%
+\subsection{Econometric specifications}
+
+To test the dissertation's hypotheses, I employ a two-model empirical strategy. The first is a high-frequency, \emph{intraday event-study model} designed to identify the immediate causal impact of communication tone. This provides the cleanest measure of the immediate reaction while controlling for policy-news shocks extracted from OIS surprises. Second, a \emph{daily panel} that tests whether tone effects persist at the day horizon and whether they are stronger in periods of financial stress.
+
+%-------------------- Intraday stacked panel ----------------------------%
+\subsubsection{Intraday model}
+
+Two complementary intraday specifications were used because they answer different parts of the central question. The pooled panel asks, within each channel, does tone contain information beyond policy-news shocks and risk controls? The asset-specific regressions then ask which markets move and by how much, delivering economically interpretable slopes in native units. Both specifications use the EA\textendash MPD/EA\textendash CED windows, the same controls (policy factors and the 60-minute pre-event $\Delta\mathrm{VSTOXX}$), and differ only in how the tone slope is parameterized and how the standard errors were clustered (two-way by event day $\times$ asset in the pooled panel; day-clustered in single-asset fits).
+
+\paragraph{Pooled stacked panel}
+\begin{equation}
+{\setlength{\jot}{1ex}
+\begin{aligned}
+\smash[b]{\underbrace{\Delta y^{(k)}_{a,e}}_{\text{event-window change}}}
+&= \alpha_a \;+\; \beta^{(k)}\,\text{tone}^{(k)}_e \;+\; \Theta^{\prime} F^{(k)}_e \;+\; \phi\,\Delta\mathrm{VSTOXX}^{\mathrm{pre}}_{e} \\[-0.35ex]
+&\quad \;+\; \gamma^{\prime}\mathrm{DoW}_e \;+\; \chi\,\mathbf{1}\{\mathrm{Pres}\}_e \;+\; \varepsilon_{a,e}.
+\end{aligned}}
+\tag{a}
+\end{equation}
+
+\textit{Where:}
+\begin{itemize}\setlength\itemsep{0.7pt}
+  \item \textbf{$\Delta y^{(k)}_{a,e}$} is the event-window change for asset $a$ on event $e$ (bps for rates/spread; \% for equity/FX).
+  \item $\text{tone}^{(k)}_e$ is the within-channel standardized hawk--dove tone.
+  \item \textbf{$F^{(k)}_e$} $=(F_{\text{target}},F_{\text{fg}},F_{\text{qe}})^{\prime}$ are the standardized PCA policy-news factors.
+  \item \textbf{$\Delta\mathrm{VSTOXX}^{\mathrm{pre}}_e$} is the 60-minute pre-event change immediately preceding the event start, absorbing contemporaneous shifts in risk appetite.
+  \item $\mathrm{DoW}_e$ is the vector of day-of-week dummies for the event date.
+  \item $\mathbf{1}\{\mathrm{Pres}\}_e$ flags President-delivered speeches (and EP hearings) within the SPEECH channel\footnote{This indicator is only defined for SPEECH events and is excluded from PR/PC/ACC specifications. It is constructed from EA--CED speaker flags in \citet{Istrefi2024} by setting it to 1 if either \(s_{\text{president}}=1\) or \(s_{\text{ECBpreshearing}}=1\) for the event, and to 0 otherwise.}
+  \item $\alpha_a$ are asset fixed effects.
+\end{itemize}
+
+\paragraph{Asset-specific intraday regressions}
+\begin{equation}
+{\setlength{\jot}{1ex}
+\begin{aligned}
+\smash[b]{\underbrace{\Delta y^{(k)}_{a,e}}_{\text{event-window change}}}
+&= \beta_{0,a} \;+\; \beta^{(k)}_{a}\,\text{tone}^{(k)}_e \;+\; \Theta^{\prime} F^{(k)}_e \;+\; \phi\,\Delta\mathrm{VSTOXX}^{\mathrm{pre}}_{e} \\[-0.35ex]
+&\quad \;+\; \gamma^{\prime}\mathrm{DoW}_e \;+\; \chi\,\mathbf{1}\{\mathrm{Pres}\}_e \;+\; \varepsilon_{a,e}.
+\end{aligned}}
+\tag{b}
+\end{equation}
+
+\textit{Where:}
+\begin{itemize}\setlength\itemsep{0.7pt}
+  \item $\beta_{0,a}$ is the asset-specific intercept; $\beta^{(k)}_{a}$ is the by-asset tone slope (bps or \% per 1-SD tone shock) for channel $k$.
+  \item All other variables are as in (a); tone and factors are standardized within channel.
+\end{itemize}
+
+
+
+%-------------------- Daily panel and state contingency -----------------%
+\subsubsection{Daily panel and state contingency}
+
+\begin{equation}
+\label{eq:baseline-daily}
+\begin{aligned}
+\Delta y_{a,t}^{(k)} 
+&= \alpha_a 
++ \beta^{(k)} \,\text{tone}_{t}^{(k)} 
++ \Theta' F_{t}^{(k)} 
++ \gamma' \text{DoW}_{t} 
++ \mu_{\text{month}(t)} \\[2pt]
+&\quad 
++ \theta \,\Delta \text{VSTOXX}_{t} 
++ \psi \,D^{\mathrm{FOMC}}_{t} 
++ \phi' M_{t} 
++ \varepsilon_{a,t}.
+\end{aligned}
+\end{equation}
+
+Where:
+
+\begin{itemize}\setlength\itemsep{1pt}
+    \item $\Delta y_{a,t}^{(k)}$ is the close-to-close change of asset $a$ on date $t$.
+    \item $\text{tone}_{t}^{(k)}$ is the standardized channel-$k$ tone index (z-score), aggregated across all documents released on date $t$.
+    \item $F_{t}^{(k)} = \{F_{\text{Target}}, F_{\text{FG}}, F_{\text{QE}}\}$ are the daily PCA factors extracted from high-frequency surprises, rotated into Target, Forward Guidance, and QE components for each channel $k$.
+    \item $\alpha_a$ are asset fixed effects, absorbing all time-invariant heterogeneity between assets.
+    \item $\text{DoW}_{t}$ are day-of-week dummies; $\mu_{\text{month}(t)}$ are month fixed effects for calendar seasonality.
+    \item $\Delta \text{VSTOXX}_{t}$ is the daily change in the VSTOXX volatility index, capturing risk environment shifts.
+    \item $D^{FOMC}_{t}$ flags U.S. FOMC policy announcement days.
+    \item $M_t = \{\text{EA CPI flash}, \text{EA PMI flash}, \text{EA GDP}, \text{US CPI}, \text{US NFP}, \text{US Core PCE}\}$ are Euro Area and U.S. macro-release dummies to control for overlap with major announcements.
+\end{itemize}
+
+\subsubsection*{State-contingent extension}
+
+To study state dependence, I interact tone with systemic stress while holding policy
+factors and macro overlaps constant:
+\begin{equation}
+\label{eq:daily-stress}
+\begin{aligned}
+\Delta y^{(k)}_{a,t}
+&= \alpha_a
++ \beta^{(k)}_{0}\,\widetilde{\mathrm{tone}}^{(k)}_{t}
++ \beta^{(k)}_{1}\,\mathrm{CISS}^{z}_{t}
++ \lambda^{(k)}\!\bigl(\widetilde{\mathrm{tone}}^{(k)}_{t}\times \mathrm{CISS}^{z}_{t}\bigr)
++ \Theta^{\prime} F^{(k)}_{t} \\[2pt]
+&\quad
++ \gamma^{\prime}\mathrm{DoW}_{t}
++ \mu_{\mathrm{month}(t)}
++ \theta\,\Delta\mathrm{VSTOXX}_{t}
++ \psi\,D^{\mathrm{FOMC}}_{t}
++ \phi^{\prime} M_{t}
++ \varepsilon_{a,t}.
+\end{aligned}
+\end{equation}
+
+\textit{Where:}
+\begin{itemize}\setlength\itemsep{1pt}
+  \item $\widetilde{\text{tone}}^{(k)}_{t} \equiv \text{tone}^{(k)}_{t}-\overline{\text{tone}}^{(k)}$ mean-centres tone within channel $k$,
+        so $\beta^{(k)}_{0}$ is the tone effect at \emph{average} stress (and holding other controls fixed).
+  \item $\text{CISS}^{z}_{t}$ is the standardized Composite Indicator of Systemic Stress (z-score);
+        the interaction coefficient $\lambda^{(k)}$ captures how the marginal tone effect varies with stress:
+        $\partial \Delta y^{(k)}_{a,t}/\partial \text{tone}^{(k)}_{t} = \beta^{(k)}_{0} + \lambda^{(k)} \text{CISS}^{z}_{t}$.
+\end{itemize}
+%=======================================================================%
+%=================================================================================%
+% 4. EMPIRICAL RESULTS
+%=================================================================================%
+\section{Empirical Results}
+\label{sec:results}
+
+\subsection{Descriptive Statistics}
+\label{stats}
+
+The table~\ref{tab:desc_stats_tone_returns} reports descriptive statistics for the channel-specific tone index and announcement window returns. Within each channel, the tone series is correctly centered and scaled: means are near zero and standard deviations about one, implying no mechanical hawkish'' or dovish'' tilt. Event-window returns have near-zero means but occasional large moves. Dispersion is greatest at short maturities (1M--3M OIS) and declines toward the long end (10Y), while equity and FX are less volatile. This is exactly what I would expect if communication primarily shifts near-term policy-rate expectations with only partial transmission to long rates and risk assets. Overall, Table~\ref{tab:desc_stats_tone_returns} confirms that the variables are well-behaved for my design (standardized tones; symmetric windows) and suggests economically meaningful cross-channel and cross-asset heterogeneity to be tested in the main results.
+
+% --- Table ---
+\begin{table}[H]
+\centering
+\caption{Descriptive Statistics: ECB Tone and Event-Window Returns}
+\label{tab:desc_stats_tone_returns}
+\begin{threeparttable}
+\footnotesize
+\setlength{\tabcolsep}{6pt}
+
+% ---------- begin tabular ----------
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}l
+  S[table-format=4.0]
+  S[table-format=2.3]
+  S[table-format=2.3]
+  S[table-format=2.3]
+  S[table-format=2.3]}
+
+
+\midrule\midrule
+\multicolumn{1}{c}{} & \multicolumn{1}{c}{N} & \multicolumn{1}{c}{Mean} &
+\multicolumn{1}{c}{SD} & \multicolumn{1}{c}{Min} & \multicolumn{1}{c}{Max} \\
+\midrule
+
+% ----- Panel A -----
+\addlinespace[0.6ex]
+\multicolumn{6}{l}{\textbf{Panel A: Tone by communication channel (event-level)}} \\
+\addlinespace[0.4ex]
+ACC    &  65 &  0.179 & 0.999 &  -2.403 &  1.910 \\
+PC     &  80 &  0.026 & 1.019 &  -3.090 &  2.367 \\
+PR     &  80 & -0.000 & 1.017 &  -2.162 &  3.058 \\
+SPEECH & 613 &  0.003 & 1.012 &  -4.792 &  3.363 \\
+\addlinespace[0.8ex]
+
+% thin rule between panels
+\midrule
+
+% ----- Panel B -----
+\addlinespace[0.6ex]
+\multicolumn{6}{l}{\textbf{Panel B: Event-window returns by asset (pooled across channels)}} \\
+\addlinespace[0.4ex]
+EUROSTOXX           & 644 &  0.013 & 0.414 &  -2.432 &   2.260 \\
+EURUSD              & 840 & -0.014 & 0.257 &  -1.330 &   1.684 \\
+OIS\_1M             & 691 &  0.107 & 1.124 &  -4.750 &  21.500 \\
+OIS\_3M             & 752 &  0.128 & 1.145 &  -5.375 &  15.980 \\
+OIS\_2Y             & 830 &  0.008 & 1.699 & -16.800 &  13.300 \\
+OIS\_10Y            & 830 & -0.010 & 1.805 &  -9.500 &   8.750 \\
+IT--DE\_10Y\_SPREAD & 783 & -0.064 & 2.698 & -18.950 &  34.050 \\
+\addlinespace[0.6ex]
+
+\midrule\midrule
+\end{tabular*}
+\begin{tablenotes}[flushleft]
+\footnotesize
+\item \textit{Notes:} Panel A reports standardized document tone (z\mbox{-}score within channel); one observation per event $\times$ channel. Panel B reports intraday event-window returns pooled across channels for the EUROSTOXX index and EURUSD (percent), and changes in OIS rates at 1M/3M/2Y/10Y maturities and the Italy-Germany 10Y sovereign yield spread (basis points). Units follow EA-MPD/EA-CED conventions. Sample: 2015-2024.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+Furthermore, Figure~\ref{fig:ecb_tone_channels} provides a visual representation of the narrative tone for each communication channel over the sample period. The plots reveal several key stylized facts. First, speeches (Panel D) are by far the most frequent communication tool, while the tone of both speeches and press conferences (Panel B) exhibits greater volatility than the more formally scripted monetary policy decisions (Panel A). Second, the six-month smoother traces a clear regime shift: a prolonged accommodative/neutral phase through the pandemic gives way to a pronounced, sustained hawkish turn from late-2021 as inflation pressures build. The co-movement of this pivot across channels suggests that the tone indices capture a common policy narrative rather than channel-specific noise. This delivers strong face validity for the empirical analysis that follows, where I test how markets price these channel-specific signals.
+
+\begin{figure}[h]
+  \centering
+   \caption{ECB Narrative Tone by Communication Channel}
+  \label{fig:ecb_tone_channels}
+  \vspace{0.5em}
+
+  % -------- Row 1 --------
+  \begin{subfigure}[t]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{tone_PR_event_ts_top.pdf}
+    \caption{Monetary Policy Decisions}
+  \end{subfigure}\hfill
+  \begin{subfigure}[t]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{tone_PC_event_ts_top.pdf}
+    \caption{Press Conferences}
+  \end{subfigure}
+
+  \vspace{0.6em}
+
+  % -------- Row 2 --------
+  \begin{subfigure}[t]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{tone_ACC_event_ts_bottom.pdf}
+    \caption{Monetary Policy Accounts}
+  \end{subfigure}\hfill
+  \begin{subfigure}[t]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{tone_SPEECH_event_ts_bottom.pdf}
+    \caption{Executive Board Speeches}
+  \end{subfigure}
+
+  \vspace{0.4em}
+  \caption*{\emph{Notes.} This chart presents event-level hawk–dove tone for each ECB communication channel (blue markers), together with a 6-month (180-day) moving average computed on a daily grid (red line). Shaded regions indicate euro-area recessions (CEPR dating when available). The y-axis is standardized within channel (z-scores), and all panels share identical scales to aid comparability.\\ 
+  \textbf{Source:} ECB and author's calculations.}
+\end{figure}
+
+%=========================================================
+
+\FloatBarrier
+
+
+\subsection{Intraday Analysis}
+Table \ref{tab:intraday_spa} and Table \ref{tab:intraday_imc} in Appendix present the core results from the pooled intraday regressions. A consistent pattern emerges across all four communication channels: high-frequency market reactions are overwhelmingly driven by substantive monetary policy news rather than narrative tone. The inclusion of PCA factors markedly improves explanatory power, with adjusted R-squared values rising sharply. These coefficients display theoretically consistent signs - QE surprises load positively across all channels, Forward Guidance is negative and significant in MPD, PC, and SPEECH, and Target surprises exert particularly strong influence in MPD. By contrast, tone coefficients are small and insignificant, suggesting that on average, narrative tone does not systematically shift returns once policy content is controlled for.
+
+%==================== TABLE 1: MPD and PC ====================%
+
+\begin{table}[!h]
+\centering
+\caption{Intraday Pooled Regressions for Scheduled Policy Announcements (MPD \& PC)}
+\label{tab:intraday_spa}
+\begin{threeparttable}
+\renewcommand{\arraystretch}{1.12}
+\setlength{\tabcolsep}{5.5pt}
+
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lcccccc}
+\toprule\toprule
+ & \multicolumn{3}{c}{\textsc{MPD}} & \multicolumn{3}{c}{\textsc{PC}} \\
+\cmidrule(lr){2-4}\cmidrule(lr){5-7}
+ & (1) & (2) & (3) & (4) & (5) & (6) \\
+\midrule
+Intercept      &  0.087 &  0.116 &  0.181 &  0.140 &  0.144 &  0.042 \\
+               & (0.117) & (0.104) & (0.596) & (0.108) & (0.102) & (0.584) \\
+\addlinespace[2pt]
+Tone (z)       & $-$0.032 &  0.030 &  0.039 & $-$0.144 & $-$0.118 & $-$0.112 \\
+               & (0.116) & (0.101) & (0.102) & (0.107) & (0.102) & (0.102) \\
+\addlinespace[2pt]
+Target factor  &         &  \textbf{0.745\sym{***}} &  \textbf{0.750\sym{***}} &         &  0.103 &  0.101 \\
+               &         & (0.188) & (0.186) &         & (0.103) & (0.103) \\
+\addlinespace[2pt]
+FG factor      &         & \textbf{$-$0.638\sym{**}} & \textbf{$-$0.631\sym{**}} &         & $-$\textbf{0.289\sym{*}} & \textbf{$-$0.293\sym{*}} \\
+               &         & (0.192) & (0.190) &         & (0.146) & (0.147) \\
+\addlinespace[2pt]
+QE factor      &         &  \textbf{0.702\sym{***}} &  \textbf{0.702\sym{***}} &         &  \textbf{0.694\sym{***}} &  \textbf{0.690\sym{***}} \\
+               &         & (0.172) & (0.170) &         & (0.147) & (0.148) \\
+\midrule
+Controls       &  No & Yes & Yes & No & Yes & Yes \\
+Asset FE       &  No &  No & Yes & No &  No & Yes \\
+DoW FE         &  No &  No & Yes & No &  No & Yes \\
+R-squared      & 0.000 & 0.256 & 0.285 & 0.003 & 0.131 & 0.144 \\
+Adj.\ R-squared& 0.001 & 0.249 & 0.270 & 0.001 & 0.123 & 0.125 \\
+N              & 560 & 560 & 560 & 560 & 560 & 560 \\
+\bottomrule\bottomrule
+\end{tabular*}
+
+\begin{minipage}{\textwidth}
+\begin{tablenotes}[flushleft,para]
+\footnotesize
+\setlength{\parskip}{2pt}
+\item[] \textit{Notes}: This table presents pooled regression results for the intraday impact of ECB communication tone during scheduled policy announcements. 
+The dependent variable is the high-frequency return for the seven core assets, pooled across assets. 
+The main independent variable is the standardized tone (z-score). 
+Coefficients are shown with two-way clustered standard errors (event date $\times$ asset) in parentheses. 
+Columns (2)–(3) and (5)–(6) include monetary policy surprise factors (Target, Forward Guidance, QE) constructed via PCA; 
+factors are built from the high-frequency dataset of \cite{Altavilla2019} following the factor methodology in \cite{Swanson2021}. 
+The specification estimated separately by channel $k\in\{\mathrm{MPD},\mathrm{PC}\}$ is:
+\begin{equation}
+{\setlength{\jot}{1ex}
+\begin{aligned}
+\Delta y^{(k)}_{a,e}
+&= \alpha_a \;+\; \beta^{(k)}\,\mathrm{tone}^{(k)}_{e} \;+\; \Theta^{\prime} F^{(k)}_{e} \;+\; \phi\,\Delta\mathrm{VSTOXX}^{\mathrm{pre}}_{e} \\
+&\quad \;+\; \gamma^{\prime}\mathrm{DoW}_{e} \;+\; \chi\,\mathbf{1}\{\mathrm{Pres}\}_{e} \;+\; \varepsilon_{a,e},
+\end{aligned}}
+\tag{a}
+\end{equation}
+\noindent \textbf{***}, \textbf{**}, and \textbf{*} denote significance at the 1\%, 5\%, and 10\% levels, respectively.
+\end{tablenotes}
+\end{minipage}
+\end{threeparttable}
+\end{table}
+
+While the pooled regressions established that policy-surprise variables dominate narrative tone on average, the by-asset estimates in Table \ref{tab:byasset_intraday_4panels} reveal where this dominance is most pronounced. The effects of policy factors align cleanly with the term structure of interest Interest rate responses align neatly with the term structure: Target shocks drive the short end (OIS-1M), Forward Guidance shapes the intermediate maturities, and QE dominates the long end (10Y). These regressions achieve very high explanatory power, with R-squared values frequently above 0.95, underscoring that the PCA-based policy decomposition effectively isolates the monetary policy signal. By contrast, equity and FX markets show weaker and more heterogeneous responses, consistent with these markets incorporating broader drivers such as growth expectations and global risk sentiment.
+
+% ==================== BY-ASSET INTRADAY COEFFICIENTS (SE BELOW COEFS) ==================== %
+\begin{table}[!htbp]
+\centering
+\caption{By-asset intraday coefficients by channel}
+\label{tab:byasset_intraday_4panels}
+\begin{threeparttable}
+\footnotesize
+\renewcommand{\arraystretch}{1.30}     
+\setlength{\tabcolsep}{5.6pt}
+
+% helpers
+\providecommand{\sym}[1]{\ifmmode^{#1}\else\(^{#1}\)\fi}
+% coef on first line (bold if starred), SE on next line
+\newcommand{\estv}[3]{%
+  \makecell[c]{%
+    \if\relax\detokenize{#3}\relax
+      #1\\[-1pt]\scriptsize(#2)%
+    \else
+      \textbf{#1}\sym{#3}\\[-1pt]\scriptsize(#2)%
+    \fi}}
+% extra breathing between factor rows 
+\newcommand{\rowgap}{\addlinespace[3.5pt]}
+% ultra-tight centered cell for Obs./R^2 numbers
+\newcommand{\tightc}[1]{\smash{\raisebox{0pt}[0pt][0pt]{#1}}}
+
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}lccccccc@{}}
+\toprule\toprule
+ & EUROSTOXX & EURUSD & OIS 1M & OIS 3M & OIS 2Y & OIS 10Y & \makecell{IT--DE\\10Y spread} \\
+\midrule
+
+\multicolumn{8}{l}{\textbf{Panel A: Press Release (PR)}}\\
+Tone (z)   & \estv{+0.004}{0.046}{}  & \estv{+0.010}{0.031}{}  & \estv{-0.013}{0.044}{}  & \estv{-0.052}{0.067}{}  & \estv{-0.068}{0.069}{}  & \estv{+0.058}{0.062}{}  & \estv{+0.266}{0.404}{} \\
+\rowgap
+\Ftarget   & \estv{-0.313}{0.080}{***} & \estv{+0.038}{0.057}{}  & \estv{+3.076}{0.080}{***} & \estv{+0.603}{0.122}{***} & \estv{-0.597}{0.126}{***} & \estv{+0.461}{0.115}{***} & \estv{+2.030}{0.720}{***} \\
+\rowgap
+\Ffg       & \estv{-0.180}{0.082}{**} & \estv{-0.042}{0.059}{}  & \estv{+0.002}{0.082}{}  & \estv{-2.704}{0.124}{***} & \estv{-2.684}{0.129}{***} & \estv{-0.044}{0.118}{} & \estv{+1.330}{0.741}{*} \\
+\rowgap
+\Fqe       & \estv{-0.390}{0.073}{***} & \estv{+0.136}{0.053}{**} & \estv{+0.009}{0.074}{} & \estv{-1.514}{0.111}{***} & \estv{+1.451}{0.115}{***} & \estv{+2.458}{0.104}{***} & \estv{+2.859}{0.667}{***} \\
+\addlinespace[1pt]
+Obs.     & \tightc{80} & \tightc{80} & \tightc{80} & \tightc{80} & \tightc{80} & \tightc{80} & \tightc{80} \\
+$R^2$    & \tightc{0.357} & \tightc{0.260} & \tightc{0.986} & \tightc{0.967} & \tightc{0.972} & \tightc{0.954} & \tightc{0.260} \\
+\addlinespace[2.5pt]
+\midrule
+
+\multicolumn{8}{l}{\textbf{Panel B: Press Conference (PC)}}\\
+Tone (z)   & \estv{+0.172}{0.074}{**} & \estv{-0.049}{0.046}{}  & \estv{-0.005}{0.010}{} & \estv{+0.001}{0.020}{} & \estv{+0.027}{0.077}{} & \estv{+0.042}{0.128}{} & \estv{-0.684}{0.648}{} \\
+\rowgap
+\Ftarget   & \estv{-0.078}{0.070}{}   & \estv{+0.124}{0.045}{***} & \estv{+0.376}{0.010}{***} & \estv{+0.146}{0.020}{***} & \estv{-0.169}{0.076}{*} & \estv{+0.712}{0.130}{***} & \estv{-0.522}{0.596}{} \\
+\rowgap
+\Ffg       & \estv{+0.079}{0.098}{}   & \estv{-0.073}{0.063}{}  & \estv{-0.002}{0.015}{} & \estv{-1.063}{0.028}{***} & \estv{-0.640}{0.108}{***} & \estv{-0.009}{0.183}{} & \estv{-0.290}{0.820}{} \\
+\rowgap
+\Fqe       & \estv{-0.186}{0.097}{*}  & \estv{+0.251}{0.064}{***} & \estv{-0.002}{0.015}{} & \estv{-0.461}{0.028}{***} & \estv{+2.381}{0.108}{***} & \estv{+3.027}{0.184}{***} & \estv{-0.213}{0.827}{} \\
+\addlinespace[1pt]
+Obs.     & \tightc{80} & \tightc{80} & \tightc{80} & \tightc{80} & \tightc{80} & \tightc{80} & \tightc{80} \\
+$R^2$    & \tightc{0.209} & \tightc{0.445} & \tightc{0.949} & \tightc{0.960} & \tightc{0.955} & \tightc{0.887} & \tightc{0.045} \\
+\addlinespace[2.5pt]
+\midrule
+
+\multicolumn{8}{l}{\textbf{Panel C: Monetary Policy Accounts (ACC)}}\\
+Tone (z)   & \estv{-0.013}{0.023}{}  & \estv{+0.038}{0.023}{}  & \estv{+0.004}{0.004}{} & \estv{-0.002}{0.004}{} & \estv{+0.016}{0.049}{} & \estv{-0.028}{0.073}{} & \estv{+0.167}{0.198}{} \\
+\rowgap
+\Ftarget   & \estv{+0.032}{0.024}{}  & \estv{+0.022}{0.023}{}  & \estv{+0.155}{0.004}{***} & \estv{+0.006}{0.004}{} & \estv{-0.023}{0.051}{} & \estv{+0.213}{0.074}{***} & \estv{-0.084}{0.204}{} \\
+\rowgap
+\Ffg       & \estv{+0.020}{0.023}{}  & \estv{-0.011}{0.022}{}  & \estv{-0.001}{0.004}{} & \estv{-0.408}{0.004}{***} & \estv{+0.026}{0.049}{} & \estv{+0.005}{0.071}{} & \estv{+0.014}{0.195}{} \\
+\rowgap
+\Fqe       & \estv{-0.040}{0.023}{*} & \estv{+0.067}{0.023}{***} & \estv{-0.000}{0.004}{} & \estv{-0.006}{0.004}{*} & \estv{+0.846}{0.050}{***} & \estv{+0.861}{0.073}{***} & \estv{+0.184}{0.199}{} \\
+\addlinespace[1pt]
+Obs.     & \tightc{57} & \tightc{57} & \tightc{57} & \tightc{57} & \tightc{57} & \tightc{57} & \tightc{57} \\
+$R^2$    & \tightc{0.285} & \tightc{0.231} & \tightc{0.967} & \tightc{0.996} & \tightc{0.863} & \tightc{0.790} & \tightc{0.045} \\
+\addlinespace[2.5pt]
+\midrule
+
+\multicolumn{8}{l}{\textbf{Panel D: Speeches (SPEECH)}}\\
+Tone (z)   & \estv{+0.027}{0.022}{}  & \estv{-0.002}{0.011}{}  & \estv{-0.002}{0.002}{} & \estv{+0.018}{0.012}{} & \estv{-0.010}{0.027}{} & \estv{+0.017}{0.036}{} & \estv{-0.135}{0.119}{} \\
+\rowgap
+\Ftarget   & \estv{+0.047}{0.024}{*} & \estv{-0.016}{0.011}{}  & \estv{+0.308}{0.002}{***} & \estv{+0.023}{0.012}{*} & \estv{+0.018}{0.027}{} & \estv{+0.086}{0.037}{**} & \estv{-0.055}{0.123}{} \\
+\rowgap
+\Ffg       & \estv{-0.002}{0.028}{}  & \estv{-0.042}{0.012}{***} & \estv{+0.001}{0.002}{} & \estv{-0.431}{0.013}{***} & \estv{-0.313}{0.030}{***} & \estv{-0.034}{0.040}{} & \estv{-0.265}{0.141}{*} \\
+\rowgap
+\Fqe       & \estv{-0.017}{0.024}{}  & \estv{+0.007}{0.011}{}  & \estv{-0.000}{0.002}{} & \estv{-0.217}{0.012}{***} & \estv{+0.836}{0.027}{***} & \estv{+1.413}{0.036}{***} & \estv{-0.157}{0.124}{} \\
+\addlinespace[1pt]
+Obs.     & \tightc{335} & \tightc{436} & \tightc{436} & \tightc{436} & \tightc{436} & \tightc{436} & \tightc{413} \\
+$R^2$    & \tightc{0.023} & \tightc{0.045} & \tightc{0.990} & \tightc{0.758} & \tightc{0.784} & \tightc{0.809} & \tightc{0.024} \\
+\midrule\midrule
+\end{tabular}
+}
+
+\begin{tablenotes}[flushleft]
+\begin{minipage}{0.98\textwidth}
+\footnotesize
+\textit{Notes}: This table reports by-asset intraday regressions for all channels in four panels. The dependent variable is the event-window change in each asset (\% for equity/FX; bps for rates/spread). The key regressor is the channel-standardized tone; all specifications include the three PCA policy-news factors. Coefficients are shown with clustered standard errors in parentheses. \sym{*}, \sym{**}, \sym{***} denote significance at the 10\%, 5\%, and 1\% levels.
+\end{minipage}
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+% ====================================================================== %
+% ====================================================================== %
+
+The one notable deviation arises during the press conference, where equities exhibit a modest but statistically significant positive response to narrative tone. This likely reflects the live Q\&A dynamic, where journalists can probe for clarification and market participants may interpret verbal cues as additional information. Importantly, the same tone signal does not generate measurable effects in rates, suggesting that markets distinguish between rhetorical signals and substantive policy shifts. Overall, the intraday evidence underscores that policy surprises anchor market pricing across assets, while tone effects remain secondary, localized, and economically modest, with visibility concentrated in equities during real-time verbal exchanges.
+
+This pattern provides the foundation for the subsequent discussion in Section \ref{limitations} of why tone may matter selectively, and how its influence compares with prior findings in the literature.
+
+
+
+\FloatBarrier
+\subsection{Daily Regression Analysis}
+
+The pooled daily regressions reported in Tables \ref{tab:daily_merge_acc_speech} and \ref{tab:daily_merge_mpd_pc} show that at the daily horizon, the information surviving from ECB communications is limited. Across press releases and press conferences, standardized tone is small and statistically indistinguishable from zero, and the policy-news factors no longer exert systematic effects at the panel level. By contrast, speeches retain economically and statistically meaningful coefficients on the policy factors, and in all channels the change in implied equity volatility ($\Delta$VSTOXX) emerges as a large and precisely estimated driver of daily variation. These pooled results suggest that day-to-day pricing is dominated by common risk conditions, with speeches standing out as the only setting where structured policy content consistently carries through to market close.
+
+Table \ref{tab:daily_byasset_4panels_inlineSE_nomacro} shows that channel-specific tone effects only become visible once assets are disaggregated. Rates display the expected maturity profile: short-term yields respond most strongly to Target surprises, while intermediate and long maturities load on Forward Guidance and QE. In press conferences, tone does not significantly affect equities or EURUSD, with only a marginal effect at the two-year yield. By contrast, in speeches equities exhibit a small negative response to hawkish tone at the 10\% level, though the effect is economically minor. This contrasts with the intraday evidence, where equities reacted modestly and positively to tone during live Q\&A. It also suggests that any initial tone-driven equity response fades or even reverses by the daily close. Across all channels, credit and sovereign spreads prove especially informative, but their variation is explained by QE and Forward Guidance surprises together with $\Delta$VSTOXX, rather than by tone itself. These results indicate that daily risk premia are the locus where structured policy signals and market sentiment intersect, while rhetorical tone leaves only weak and short-lived effects.
+
+%========================================================= %
+
+% ======= TABLE: Baseline vs. Tone×CISS (ACC & SPEECH) == %
+\begingroup
+
+\renewcommand{\arraystretch}{1.28}   % modest row height
+\setlength{\tabcolsep}{7.2pt}        % comfortable column padding
+
+% --- local stars and bolding (math-aware) ---
+\renewcommand{\sym}[1]{\ifmmode^{\textbf{#1}}\else\(^{\textbf{#1}}\)\fi}
+
+% coef on top, SE (normal size) below; bold math/text when stars present
+\makeatletter
+\@ifundefined{estv}{%
+  \newcommand{\estv}[3]{%
+    \makecell[c]{%
+      \if\relax\detokenize{#3}\relax
+        #1\\[1pt](#2)%
+      \else
+        {\bfseries\boldmath #1}\sym{#3}\\[1pt](#2)%
+      \fi}}
+}{%
+  \renewcommand{\estv}[3]{%
+    \makecell[c]{%
+      \if\relax\detokenize{#3}\relax
+        #1\\[1pt](#2)%
+      \else
+        {\bfseries\boldmath #1}\sym{#3}\\[1pt](#2)%
+      \fi}}
+}
+\makeatother
+
+
+\begin{table}[H]
+\centering
+\caption{Daily pooled regressions by channel: baseline vs.\ Tone $\times$ CISS}
+\label{tab:daily_merge_acc_speech}
+\begin{threeparttable}
+
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} l cc cc}
+\toprule\toprule
+ & \multicolumn{2}{c}{\textbf{ACC}} & \multicolumn{2}{c}{\textbf{SPEECH}} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}
+ & (1) Baseline & (2) + CISS \& int. & (3) Baseline & (4) + CISS \& int. \\
+\midrule
+Intercept
+& \estv{+0.583}{0.894}{}
+& \estv{$-1.489$}{2.514}{}
+& \estv{$-0.401$}{0.323}{}
+& \estv{$-1.995$}{0.703}{**} \\
+Tone (z)
+& \estv{+0.339}{0.262}{}
+& \estv{+2.084}{0.772}{**}
+& \estv{+0.130}{0.069}{*}
+& \estv{$-0.038$}{0.132}{} \\
+CISS (z)
+& \multicolumn{1}{c}{\textemdash}
+& \estv{+1.448}{0.593}{**}
+& \multicolumn{1}{c}{\textemdash}
+& \estv{$-0.154$}{0.128}{} \\
+Tone $\times$ CISS (z)
+& \multicolumn{1}{c}{\textemdash}
+& \estv{$-1.861$}{0.565}{**}
+& \multicolumn{1}{c}{\textemdash}
+& \estv{$-0.211$}{0.142}{} \\
+\addlinespace[2pt]
+Target factor
+& \estv{$-0.256$}{0.280}{}
+& \estv{$-1.783$}{1.143}{}
+& \estv{+0.114}{0.059}{*}
+& \estv{$-0.024$}{0.137}{} \\
+FG factor
+& \estv{$-0.122$}{0.248}{}
+& \estv{$-1.066$}{0.514}{*}
+& \estv{+0.165}{0.062}{**}
+& \estv{+0.109}{0.199}{} \\
+QE factor
+& \estv{$-0.210$}{0.264}{}
+& \estv{+0.805}{0.644}{}
+& \estv{+0.180}{0.061}{**}
+& \estv{$-0.118$}{0.143}{} \\
+$\Delta$VSTOXX
+& \estv{\textbf{+1.282}}{0.282}{***}
+& \estv{+1.091}{0.887}{}
+& \estv{\textbf{+0.684}}{0.039}{***}
+& \estv{\textbf{+0.548}}{0.083}{***} \\
+\midrule
+DoW FE        & Yes & Yes & Yes & Yes \\
+Month FE      & Yes & Yes & Yes & Yes \\
+Asset FE      & Yes & Yes & Yes & Yes \\
+$R^{2}$       & 0.090 & 0.183 & 0.117 & 0.124 \\
+Adj.\ $R^{2}$ & 0.044 & 0.072 & 0.109 & 0.093 \\
+$N$           & 456 & 160 & 3005 & 864 \\
+\bottomrule\bottomrule
+\end{tabular*}
+
+\begin{tablenotes}[flushleft]
+\footnotesize
+\item \textit{Notes}: Pooled daily panel by channel with two specifications per channel. Columns (1) and (3) are the \textbf{baseline} with standardized tone (z), the three daily PCA policy–news factors (Target, Forward Guidance, QE), and $\Delta$VSTOXX; columns (2) and (4) add standardized \textbf{CISS} and the \textbf{Tone$\times$CISS} interaction. Day-of-week, month, and asset fixed effects are included. Standard errors are two-way clustered by \textit{date} and \textit{asset}; SEs are shown in parentheses under coefficients. \textbf{Bold} coefficients are statistically significant; \sym{*}, \sym{**}, \sym{***} denote significance at the 10\%, 5\%, and 1\% levels.
+\end{tablenotes}
+
+\end{threeparttable}
+\end{table}
+\endgroup
+%=========================================================%
+
+
+In the full specification with stress interactions (columns (2) and (4) of Tables \ref{tab:daily_merge_acc_speech} and \ref{tab:daily_merge_mpd_pc}, evidence of state dependence emerges most clearly in the \textit{Monetary Policy Accounts}. When systemic stress is at average levels \((\text{CISS}^z = 0)\), tone in Accounts is associated with a significant positive return impact. However, the interaction between tone and CISS is negative and statistically significant, indicating that as stress increases, the effect of tone weakens and may even reverse.\footnote{The marginal effect of tone is given by \(\partial \Delta y / \partial \text{tone} = \beta^{(ACC)}_0 + \lambda^{(ACC)} \cdot \text{CISS}^z\), implying that the tone effect becomes zero at approximately one standard deviation of CISS.} The CISS coefficient itself is positive and significant in this channel, indicating that markets pay closer attention to Accounts under heightened stress. No such amplification emerges for other channels.
+
+Overall, the daily analysis confirms that structured policy signals remain the primary drivers of asset prices, with their influence persisting through to the market close, while tone effects appear only selectively and under specific conditions. These findings underscore that the informational content of ECB communication is highly conditional and it varies by channel, asset, and state of the market. 
+
+%=================================================================================%
+%=================================================================================%
+
+\subsection{Discussion and Policy Implications}
+
+The results connect closely with the existing literature and help to clarify some apparent disagreements. \citet{Altavilla2019} demonstrate that the ECB’s two-tier communication generates distinct shocks, with Target effects concentrated in press releases and Forward Guidance (FG) and QE shaping conference-window yields. I find the same pattern: Target dominates the short end, while FG and QE load more heavily on the belly and the long end. \citet{andradeferroni2021} show that Odyssean FG\footnote{“Odyssean” FG denotes a binding commitment about the future policy path, distinct from “Delphic” guidance that primarily conveys information about the outlook. See \citet{andradeferroni2021}.} pushes up medium-to-long yields and depresses equities, and my intraday estimates in Table \ref{tab:byasset_intraday_4panels} deliver this configuration across multiple channels. I find that only equities display a significant sensitivity to tone across channels, even after controlling for policy shocks. This is consistent with the evidence in \citet{Parle2022} and \citet{KaminskasJurksas2024}, who also identify equity effects from press-conference and speech tone. Both studies attribute this to the operation of an \textit{information channel}, whereby communication conveys central bank's private assessments about growth and inflation that investors interpret as favourable news rather than a simple re-pricing of the policy path. However, my results differ sharply from \citet{Istrefi2024}, who document that inter-meeting communication events are associated with significant market movements comparable to, or larger than, those following policy announcements, particularly at longer maturities. My estimates suggest instead that tone has limited traction in rates and spreads and is concentrated in equity responses.
+
+
+
+\begin{figure}[h]
+  \centering
+  \caption{EUROSTOXX vs Tone (Intraday, by Communication Channel)}
+  \label{fig:stoxx_scatter_by_channel}
+  \vspace{0.5em}
+
+  % -------- Row 1 --------
+  \begin{subfigure}[t]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{EUROSTOXX_PR_scatter.pdf}
+    \caption{Decisions / Press Release}
+  \end{subfigure}\hfill
+  \begin{subfigure}[t]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{EUROSTOXX_PC_scatter.pdf}
+    \caption{Press Conference}
+  \end{subfigure}
+
+  \vspace{0.6em}
+
+  % -------- Row 2 --------
+  \begin{subfigure}[t]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{EUROSTOXX_ACC_scatter.pdf}
+    \caption{Accounts (Minutes)}
+  \end{subfigure}\hfill
+  \begin{subfigure}[t]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{EUROSTOXX_SPEECH_scatter.pdf}
+    \caption{Speeches}
+  \end{subfigure}
+
+  \vspace{0.4em}
+  \caption*{\emph{Notes.} Scatter plots show intraday EUROSTOXX changes against narrative tone for four ECB communication channels. 
+  Red line indicates OLS fit with 95\% confidence band; variables are residualized on policy factors ($F_\text{target}$, $F_\text{FG}$, $F_\text{QE}$) 
+  and $\Delta\mathrm{VSTOXX}_{\mathrm{PRE}}$. Data winsorized at the 2nd–98th percentiles to mitigate outlier influence. \\
+  \textbf{Source:} Author's calculations based on ECB and Bloomberg data.}
+\end{figure}
+
+My results show that tone can act as a complementary tool alongside hard policy stances, but it cannot shape expectations on its own. Central banks should therefore anchor communication in clear signals about the policy path and balance-sheet stance, using tone selectively to reinforce credibility and nuance. These lessons are particularly relevant in the post-2022 environment, when the ECB raised rates at an unprecedented pace while shrinking its balance sheet. In such high-stress environments, markets paid less attention to rhetoric and more to concrete guidance on terminal rates, policy persistence, and the pace of quantitative tightening. At the same time, effective transmission to the real economy makes clear communication essential. It is policy surprises related to QE and forward guidance, rather than tone, that drive long-term yields and affect sovereign and credit spreads. These spreads further influence corporate borrowing costs, sovereign refinancing, and investment patterns. Consistent and well-timed communication reduces uncertainty and supports transmission, while poorly calibrated rhetoric can raise term premia and widen credit spreads, especially for the periphery and high-yield issuers. 
+
+%=================================================================================%
+% 5. ROBUSTNESS CHECKS
+%=================================================================================%
+\section{Robustness Checks}
+\label{sec:robustness}
+
+As a robustness check, I re-estimated the baseline intraday specification separately for the pre- and post-COVID periods while keeping the econometric design unchanged. This split-sample test examines whether the tone impact is regime-dependent or stable across very different policy and market environments. It tackles two practical concerns: (i) pandemic-era interventions and temporary market frictions could mechanically amplify or dampen high-frequency responses; and (ii) the post-COVID information set (e.g., inflation and policy-rate uncertainty) may alter how investors translate ECB communication into prices. The accompanying figure \ref{fig:subsample_forest_plots} reports the pre- and post-COVID coefficients (with 95\% CIs) for each communication channel. Overall, in both regimes, the patterns mirror the main analysis: Policy factor loadings retain their expected signs and relative magnitudes across regimes, and the incremental role of tone remains limited once policy factors are controlled for.
+
+
+%=================================================================================%
+% FIGURE: Pre- vs. Post-2022 Pooled Regression Results by Channel
+%=================================================================================%
+\begin{figure}[h]
+    \centering
+    \caption{Subsample Analysis: Intraday Impact of Tone and Policy Factors}
+    \label{fig:subsample_forest_plots}
+
+    % --- Top Row ---
+    \begin{subfigure}[t]{0.49\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{Panel_A.pdf}
+        \caption{MPD - Press Release}
+        \label{fig:subsample_pr}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.49\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{Panel_B.pdf}
+        \caption{MPD - Press Conference}
+        \label{fig:subsample_pc}
+    \end{subfigure}
+
+    \vspace{0.6em} % Vertical space between rows
+
+    % --- Bottom Row ---
+    \begin{subfigure}[t]{0.49\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{Panel_C.pdf}
+        \caption{Monetary Policy Accounts}
+        \label{fig:subsample_acc}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.49\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{Panel_D.pdf}
+        \caption{Speeches}
+        \label{fig:subsample_speech}
+    \end{subfigure}
+
+    \begin{minipage}{\textwidth}
+  \vspace{0.5em}
+  \footnotesize
+  \raggedright
+  \textit{Note}. This figure plots the coefficients and 95\% confidence intervals from pooled intraday regressions, estimated separately for the Pre--COVID {\color{ecbBlue}\ensuremath{\blacklozenge}} and Post--COVID {\color{myorange}\ensuremath{\blacksquare}} periods. The dependent variable is the pooled intraday return across the seven core assets. The specification includes asset and day-of-week fixed effects, and controls for the Target, FG, and QE factors. Stars denote conventional significance levels: \textbf{***} $p<0.01$, \textbf{**} $p<0.05$, \textbf{*} $p<0.10$.
+\end{minipage}
+
+\end{figure}
+
+As a second check, I performed intraday regressions using an alternative tone dictionary based on the lexicons of \cite{Tadle2022} for Federal Reserve Communication. The results in Tables \ref{app:altdict_intraday_pooled} and \ref{app:altdict_byasset_4panels_inlineSE_intraday} indicate that they are closely aligned with the baseline. Across channels, the three policy factors keep their expected signs and relative magnitudes. The tone coefficient continues to be small and imprecise in most specifications, suggesting that my conclusions are not driven by any single sentiment measure. The one notable result that holds across dictionaries is a positive and statistically significant equity response during press conferences, reflecting that the unscripted Q\&A provides incremental, forward-looking information for risk appetite beyond the measured policy surprises. Overall, the size of the tone effect is smaller than the impact of the policy factors and the cross-asset response pattern remains unchanged. These consistencies indicate that the findings capture genuine relationships rather than artifacts of a particular dictionary.
+
+In the final robustness check, I re-evaluate the intraday specifications after purging the tone measure of policy content. Within each channel, I project the baseline tone on the three PCA policy factors (Target, FG, QE) and use the standardised residual - an \emph{orthogonalised tone} as the regressor, keeping the econometric design otherwise identical to the baseline. This is inspired from \cite{KaminskasJurksas2024}’s residual-based approach to isolating the “surprise” in communication,\footnote{\cite{KaminskasJurksas2024} first remove predictable components from a sentiment index by estimating
+\(
+\text{MP\_Sentiment}_t=\beta_0+\beta_1\,\text{Sentiment\_Trend}_t+\beta_2\,\text{Inflation}_{2y2y,t}
++\beta_3\,\text{Financial\_volatility}_t+\beta_4\,\text{Economic\_uncertainty}_t+\varepsilon_t,
+\)
+and use the residual as a cyclical (“surprise”) sentiment component. They then regress asset returns on this residual:
+\(
+R_t=\beta_0+\beta_1\,\text{Sentiment\_Cyclical}_t+\beta_2\,R^{\text{control}}_t+\varepsilon_t.
+\)
+} but aligns the purge with the policy-news dimensions that actually price in my sample. The results reported in Tables \ref{tab:orthog_tone_pooled} and \ref{tab:intraday_byasset_orthotone} reflect their similarities with the baseline result: factor loadings keep their expected signs and magnitudes across channels, while the residual (policy-free) tone plays at most a minor role. This strengthens the main interpretation that markets primarily absorb ECB communication through policy content and that any "pure" tone once stripped of policy news adds little explanatory power beyond those factors.
+
+%===============================================================================
+% Intraday pooled regressions with orthogonalised tone
+%===============================================================================
+\begin{table}[!h]
+\centering
+\caption{Intraday Pooled Regressions with Orthogonalised Tone by Channel}
+\label{tab:orthog_tone_pooled}
+\begin{threeparttable}
+\setlength{\tabcolsep}{7pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{lcccc}
+\toprule\toprule
+& \textbf{MPD} & \textbf{PC} & \textbf{ACC} & \textbf{SPEECH} \\
+\midrule
+\multicolumn{5}{l}{\textbf{Panel A: Regression coefficients}}\\
+Intercept            & +0.142 & +0.036 & $-$0.001 & +0.012 \\
+                     & [0.581] & [0.584] & [0.094] & [0.065] \\
+Orthog. tone (z)     & +0.040 & $-$0.111 & +0.025 & $-$0.009 \\
+                     & [0.102] & [0.102] & [0.036] & [0.020] \\
+Target factor        & \textbf{+0.757}$^{***}$ & +0.115 & +0.040 & \textbf{+0.085}$^{***}$ \\
+                     & [0.185] & [0.103] & [0.038] & [0.023] \\
+FG factor            & \textbf{$-$0.622}$^{**}$ & \textbf{$-$0.297}$^{*}$ & $-$0.047 & \textbf{$-$0.104}$^{***}$ \\
+                     & [0.189] & [0.146] & [0.037] & [0.025] \\
+QE factor            & \textbf{+0.702}$^{***}$ & \textbf{+0.690}$^{***}$ & \textbf{+0.275}$^{***}$ & \textbf{+0.289}$^{***}$ \\
+                     & [0.170] & [0.147] & [0.038] & [0.023] \\
+Asset FE / DoW FE    & Yes / Yes & Yes / Yes & Yes / Yes & Yes / Yes \\
+$R^2$ / Adj. $R^2$   & 0.285 / 0.271 & 0.144 / 0.126 & 0.168 / 0.145 & 0.090 / 0.086 \\
+$N$                  & 560 & 560 & 399 & 3223 \\
+\addlinespace[2pt]
+\midrule
+\multicolumn{5}{l}{\textbf{Panel B: First–stage diagnostics for orthogonalised tone}}\\
+Events (tone construction)             & 80    & 80    & 57    & 363 \\
+First–stage $R^2$                      & 0.016 & 0.016 & 0.077 & 0.013 \\
+$\mathrm{corr}(\text{tone},\,\text{tone}_{\perp})$ & 0.992 & 0.992 & 0.961 & 0.994 \\
+$\mathrm{corr}(\text{tone}_{\perp}, F_{\text{target}})$ & 0.000 & 0.000 & 0.000 & 0.000 \\
+$\mathrm{corr}(\text{tone}_{\perp}, F_{\text{fg}})$     & 0.000 & 0.000 & 0.000 & 0.000 \\
+$\mathrm{corr}(\text{tone}_{\perp}, F_{\text{qe}})$     & 0.000 & 0.000 & 0.000 & 0.000 \\
+\bottomrule\bottomrule
+\end{tabular}
+\begin{tablenotes}[flushleft]
+\footnotesize
+\textit{Notes}: “Orthog. tone” is constructed within each channel $k\in\{\text{MPD, PC, ACC, SPEECH}\}$ by projecting the event–level
+standardized tone on that channel’s PCA policy factors and taking the residual, which is then re-standardized to unit variance:
+\[
+z^{(k)}_{t} \;=\; \alpha^{(k)} + \Theta^{(k)\prime} F^{(k)}_{t} + \varepsilon^{(k)}_{t},
+\qquad
+\text{tone}^{(k)}_{\perp,t} \;=\; \frac{\varepsilon^{(k)}_{t}}{\operatorname{sd}(\varepsilon^{(k)}_{t})}.
+\]
+Here $t$ indexes event days, $z^{(k)}_{t}$ is the baseline tone (z-score), and $F^{(k)}_{t}=(F_{\text{Target}},F_{\text{FG}},F_{\text{QE}})'$ are the daily
+PCA policy factors computed for channel $k$. The first-stage $R^2$ reports the share of tone variance explained by these factors in the
+projection above (smaller values indicate little linear policy content in tone). Correlations in Panel B are computed across event days
+used to build $z^{(k)}_{t}$. Panel A regressions are estimated on intraday data with asset and day-of-week fixed effects and two-way
+clustered standard errors (event date $\times$ asset). By construction, $\operatorname{corr}(\text{tone}^{(k)}_{\perp,t},F^{(k)}_{t,j})\approx 0$ for each factor $j$, and
+$\operatorname{corr}(z^{(k)}_{t},\text{tone}^{(k)}_{\perp,t})\approx\sqrt{1-R^2}$ when an intercept is included. Bold coefficients denote significance at the
+10\% (*), 5\% (**), and 1\% (***) levels.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+%=================================================================================%
+% 5. Limitations and Extensions 
+%=================================================================================%
+
+\section{Limitations and Extensions}
+\label{limitations}
+
+A key limitation of my design is that the dictionary-based tone measures, even when carefully curated and checked against an alternative lexicon, remain coarse proxies for what market participants actually extract from ECB texts. Dictionaries are context-insensitive: they struggle with negation (“not improving”), scope (“risks to growth”), modality and hedging (“could”, “likely”), and domain-specific meanings (“tightening cycle” vs “tight conditions”). Recent work also argues that simple counts miss affective nuance and rhetorical signals in central-bank language. These properties introduce classical measurement error that likely attenuates estimated tone effects and can blur tone with policy content. My factor-decomposition controls (Target, FG, QE) help mitigate that blur, but they have their own drawback. Because they are extracted from asset-price moves around announcements, they can absorb not only policy information (which I then attribute to the Target/FG/QE policy factors) but also time-varying risk premia and liquidity conditions, so the factors are not a "pure" measure of what was communicated. This underscores how hard it is to cleanly separate communicative tone from the channels through which markets price policy news.
+
+To move past these limits, recent NLP advances offer practical upgrades directly relevant to my setting. \citet{GambacortaEtAl2024} develop central-bank-adapted transformer models that handle negation, hedging, and idiomatic usage better than dictionaries and improve performance on policy-text tasks. \citet{DengXuTang2024} read press conferences at the sentence level and fuse textual stance with vocal affect in a fine-grained, multi-modal framework, yielding stronger links to high-frequency market moves than coarse document scores. These advances align with my objectives and suggest that an ECB-specific, fine-tuned model would produce more faithful and stable tone measures. Therefore, an extension of my study would be to train an ECB-tuned classifier that jointly predicts tone and policy content, uses retrieval to anchor outputs in prior ECB communications, and imposes an explicit orthogonality penalty so the learned tone is separated from the Target, FG, and QE factor dimensions. I would validate pre- and post-COVID for stability checks, then re-estimate the intraday specifications to assess incremental explanatory power.
+
+
+
+%=================================================================================%
+% 6. CONCLUSION
+%=================================================================================%
+\section{Conclusion}
+\label{sec:conclusion}
+
+This dissertation shows that ECB communication is priced by markets primarily through structured policy surprises, with narrative tone playing a secondary and conditional role. Intraday reactions confirm that Target, Forward Guidance, and QE factors anchor the term structure and spreads, while tone briefly lifts equities during press-conference Q\&A before fading. At the daily horizon, tone effects are limited to speeches and the Monetary Policy Accounts, with the latter showing state dependence: tone matters under average stress but loses traction in turbulent regimes. These results highlight that tone can complement, but not substitute for, hard policy signals. Therefore, central banks should prioritise clear guidance on policy rates and balance-sheet strategy, while using tone to reinforce credibility and nuance. This is especially important in the current environment of heightened macroeconomic uncertainty and shifting global trade dynamics. Future research could build on this analysis by using richer text-mining methods, incorporating multimodal communication, and examining how tone interacts with expectations around key turning points in monetary policy.
+
+
+
+
+%=================================================================================%
+% REFERENCES
+%=================================================================================%
+\newpage
+\bibliographystyle{agsm} 
+\bibliography{references} 
+
+%=================================================================================%
+% APPENDIX
+%=================================================================================%
+\newpage
+\appendix
+
+\addtocontents{toc}{\protect\setcounter{tocdepth}{1}}
+% Keep numbering for subsections and below inside the appendix
+\setcounter{secnumdepth}{2}
+
+\section{Appendix}
+
+\subsection{Pre-processing Steps}
+\label{app:preprocess}
+
+This appendix documents the text pre-processing pipeline used before applying the dictionary-based scoring. The workflow mirrors the widely used \texttt{quanteda} pipeline in \citet{Benoit2018}, and is implemented in Python to match the replication codebase.
+
+\begin{enumerate}
+    \item Each document (press conference transcript, monetary policy account, or speech) is segmented into paragraphs and then into sentences.
+    \item A standard list of stopwords is removed to eliminate very common tokens that carry negligible information (for example ``the'', ``and'', ``or'').
+    \item A short list of ECB-specific boilerplate terms with low informational value is removed. These are selected after inspecting the most frequent tokens that remain after stopword removal, to reduce ambiguity driven by non-informative phrases.
+    \item All numeric characters and punctuation are stripped.
+    \item All tokens are lowercased to ensure results are invariant to capitalization.
+    \item Sentence boundaries are validated to ensure that monetary-policy sentences are not split improperly. Only sentences that contain at least one economic term from the ECB-adapted dictionaries proceed to scoring.
+\end{enumerate}
+
+
+%=========================================================================================================================================%
+
+\newpage
+
+\subsection{ECB-adapted Dictionaries: Neutral \& Pessimistic Terms}
+\label{app:dicts_neutral_pessimistic}
+
+\begin{table}[htbp]
+\centering
+\caption{ECB-specific lexicons used in the study (Neutral and Pessimistic)}
+\label{tab:appendix_lexicons_part1}
+\begin{threeparttable}
+\footnotesize
+
+\begin{tabularx}{\textwidth}{@{}XXX@{}}
+\hline\hline
+\\[-1.5ex] 
+
+%----------------------------- Panel A ------------------------------------%
+\multicolumn{3}{@{}l}{\textbf{Panel A: Neutral economic terms}}\\[0.5ex]
+\hline
+\\[-1.5ex]
+\raggedright
+activity\\
+annual\_growth\\
+business\\
+confidence\\
+credit\\
+demand\\
+economy\\
+economic\_growth\\
+economies\\
+employment\\
+expansion\\
+expectations\\
+financial\_conditions\\
+financial\_market\\
+financial\_markets\\
+financial\_system\\
+financial\_stability
+&
+\raggedright
+financing\_conditions\\
+firms\\
+gdp\\
+growth\\
+headline\_inflation\\
+hicp\\
+income\\
+inflation\\
+inflation\_expectations\\
+inflation\_rates\\
+interest\_rate\\
+interest\_rates\\
+investment\\
+job\_creation\\
+labour\\
+labour\_market\\
+liquidity
+&
+\raggedright
+loans\\
+macroeconomic\_projections\\
+markets\\
+outlook\\
+output\\
+price\\
+prices\\
+private\_sector\\
+projection\\
+projections\\
+rate\\
+rates\\
+real\_economy\\
+recovery\\
+situation\\
+stability\\
+wage\\
+\\[1.5ex]
+
+%----------------------------- Panel B ------------------------------------%
+\multicolumn{3}{@{}l}{\textbf{Panel B: Pessimistic economic terms}}\\[0.5ex]
+\hline
+\\[-1.5ex]
+\raggedright
+app\\
+asset\_purchases\\
+balance\_sheet\\
+balance\_sheets\\
+challenge\\
+challenges\\
+concern\\
+concerns\\
+crises\\
+crisis
+&
+\raggedright
+fragmentation\\
+issue\\
+issues\\
+loss\\
+losses\\
+problem\\
+problems\\
+programme\\
+purchase\\
+recession
+&
+\raggedright
+risk\\
+risks\\
+stress\\
+tensions\\
+turbulence\\
+turmoil\\
+uncertainty\\
+uncertainties\\
+unemployment\\
+volatility\\
+\\[1ex]
+
+\end{tabularx}
+
+\vspace{2mm} 
+\begin{tablenotes}[flushleft]
+\footnotesize
+\item \textit{Notes}: The neutral vs. pessimistic economic lists provide the economic “base” classification used in the sentence-level scoring rules. The positive vs. negative lists provide the polarity classification. The combined rules follow \cite{Parle2022} with lexicons adapted from \cite{KaminskasJurksas2024}.
+\end{tablenotes}
+
+\end{threeparttable}
+\end{table}
+
+\clearpage
+
+\subsection{ECB-adapted Dictionaries: Positive \& Negative Terms}
+\label{app:dicts_positive_negative}
+
+\begin{table}[htbp]
+\centering
+\caption{ECB-specific lexicons used in the study (Positive and Negative)}
+\label{tab:appendix_lexicons_part2}
+\begin{threeparttable}
+\footnotesize
+
+\begin{tabularx}{\textwidth}{@{}XXX@{}}
+\hline\hline
+\\[-1.5ex] 
+
+%----------------------------- Panel C ------------------------------------%
+\multicolumn{3}{@{}l}{\textbf{Panel C: Positive tone words}}\\[0.5ex]
+\hline
+\\[-1.5ex]
+\raggedright
+better\\
+favourable\\
+favourably\\
+good\\
+grew\\
+grow\\
+growing\\
+grows\\
+high\\
+higher\\
+improve\\
+improved\\
+improvement\\
+improves
+&
+\raggedright
+improving\\
+increase\\
+increased\\
+increases\\
+increasing\\
+increasingly\\
+large\\
+larger\\
+positive\\
+rise\\
+rises\\
+rising\\
+rose\\
+stable
+&
+\raggedright
+strengthen\\
+strengthening\\
+strengthens\\
+strong\\
+stronger\\
+strongly\\
+successful\\
+supporting\\
+sustainable\\
+up\\
+upside\\
+upswing\\
+uptick\\
+upward\\
+\\[1.5ex]
+
+%----------------------------- Panel D ------------------------------------%
+\multicolumn{3}{@{}l}{\textbf{Panel D: Negative tone words}}\\[0.5ex]
+\hline
+\\[-1.5ex]
+\raggedright
+adverse\\
+decline\\
+declined\\
+declining\\
+decrease\\
+difficult\\
+downward\\
+end\\
+fall\\
+falling
+&
+\raggedright
+fell\\
+lack\\
+limited\\
+little\\
+low\\
+lower\\
+negative\\
+reduce\\
+reduced
+&
+\raggedright
+reduces\\
+reducing\\
+reduction\\
+slide\\
+small\\
+smaller\\
+subdued\\
+vulnerable\\
+weak\\
+\\[1ex]
+
+\end{tabularx}
+
+\vspace{2mm} 
+\begin{tablenotes}[flushleft]
+\footnotesize
+\item \textit{Notes}: The neutral vs. pessimistic economic lists provide the economic “base” classification used in the sentence-level scoring rules. The positive vs. negative lists provide the polarity classification. The combined rules follow \cite{Parle2022} with lexicons adapted from \cite{KaminskasJurksas2024}.
+\end{tablenotes}
+
+\end{threeparttable}
+\end{table}
+
+
+%============================================================%
+
+\clearpage
+
+\subsection{BIS vs. ECB Speech Tone}
+\label{comptable}
+\begin{table}[htbp]
+\centering
+\caption{BIS vs. ECB Speech Tone: Coverage, Top Speakers, and Cross-Source Overlap}
+\label{tab:bis_ecb_overlap}
+\begin{threeparttable}
+\footnotesize
+\setlength{\tabcolsep}{7pt}
+\renewcommand{\arraystretch}{1.2}
+
+% -------- Panel A --------
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}} l c r r r r c c @{}}
+\toprule\toprule
+\multicolumn{8}{@{}l}{\textbf{Panel A: Coverage and distribution of daily tone indices}}\\
+\midrule
+Source & Days with tone & Mean & Std & Min & Max & Positive \% & Negative \%\\
+\midrule
+BIS speeches          & 673 & 5.43 & 9.36 & -47.47 & 41.67 & 71.3 & 22.7\\
+ECB official speeches & 789 & 5.33 & 9.51 & -41.58 & 55.17 & 71.4 & 22.2\\
+\bottomrule
+\end{tabular*}
+
+\vspace{4pt}
+
+% -------- Panel B --------
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}} l l r l r @{}}
+\toprule
+\multicolumn{5}{@{}l}{\textbf{Panel B: Top speakers by count}}\\
+\midrule
+Rank & \multicolumn{2}{c}{BIS speeches} & \multicolumn{2}{c}{ECB official speeches}\\
+     & Name & Count & Name & Count\\
+\midrule
+1 & Christine Lagarde              & 104 & Christine Lagarde            & 133\\
+2 & Mario Draghi                   &  89 & Yves Mersch                  & 111\\
+3 & Yves Mersch                    &  87 & Mario Draghi                 & 105\\
+4 & Beno\"it C\oe ur\'e            &  85 & Beno\"it C\oe ur\'e          & 100\\
+5 & Fabio Panetta                  &  85 & Luis de Guindos              &  95\\
+\bottomrule
+\end{tabular*}
+
+\vspace{4pt}
+
+% -------- Panel C --------
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}} l r @{}}
+\toprule
+\multicolumn{2}{@{}l}{\textbf{Panel C: Cross-source overlap}}\\
+\midrule
+Days with both datasets           & 611  \\
+Correlation of daily tone indices & 0.954\\
+\bottomrule\bottomrule
+\end{tabular*}
+
+\begin{tablenotes}[flushleft]
+\footnotesize
+\item \textit{Notes}: Tone is the dictionary-based hawk–dove index described in the text. “Positive\%” (“Negative\%”) is the share of days with tone $>$ 0 ($<$ 0); the residual share is near-zero/neutral. BIS speeches were retrieved via the \texttt{gingado} Python library from the Bank for International Settlements repository (\url{https://bis-med-it.github.io/gingado/datasets.html\#load_cb_speeches}). ECB official speeches were scraped from the ECB website (\url{https://www.ecb.europa.eu/press/key/html/downloads.en.html}). Date coverage: BIS 2015-01-25 to 2025-06-19; ECB official 2015-01-25 to 2025-07-14. Dates are inclusive.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+%==============================================================================================================================================================%
+
+\clearpage
+\subsection{Intraday Pooled Regressions for Inter-Meeting Communications (ACC \& SPEECH}
+
+\begin{table}[!htbp]
+\centering
+\caption{Intraday Pooled Regressions for Inter-Meeting Communications (ACC \& SPEECH)}
+\label{tab:intraday_imc}
+\begin{threeparttable}
+\renewcommand{\arraystretch}{1.12}
+\setlength{\tabcolsep}{5.5pt}
+
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lcccccc}
+\toprule\toprule
+ & \multicolumn{3}{c}{\textsc{ACC}} & \multicolumn{3}{c}{\textsc{SPEECH}} \\
+\cmidrule(lr){2-4}\cmidrule(lr){5-7}
+ & (1) & (2) & (3) & (4) & (5) & (6) \\
+\midrule
+Intercept      &  0.045 &  0.039 & $-$0.005 & $-$0.008 & $-$0.001 &  0.019 \\
+               & (0.036) & (0.036) & (0.094) & (0.018) & (0.020) & (0.068) \\
+\addlinespace[2pt]
+Tone (z)       & $-$0.009 &  0.019 &  0.026 &  0.004 & $-$0.013 & $-$0.015 \\
+               & (0.036) & (0.037) & (0.038) & (0.018) & (0.022) & (0.022) \\
+\addlinespace[2pt]
+Target factor  &         &  0.043 &  0.046 &         &  \textbf{0.061\sym{**}} & \textbf{0.061\sym{**}} \\
+               &         & (0.039) & (0.039) &         & (0.022) & (0.022) \\
+\addlinespace[2pt]
+FG factor      &         & $-$0.048 & $-$0.051 &         & \textbf{$-$0.152\sym{***}} & \textbf{$-$0.151\sym{***}} \\
+               &         & (0.037) & (0.037) &         & (0.025) & (0.025) \\
+\addlinespace[2pt]
+QE factor      &         &  \textbf{0.273\sym{***}} &  \textbf{0.273\sym{***}} &         &  \textbf{0.279\sym{***}} & \textbf{0.280\sym{***}} \\
+               &         & (0.038) & (0.038) &         & (0.022) & (0.022) \\
+\midrule
+Controls       &  No & Yes & Yes & No & Yes & Yes \\
+Asset FE       &  No &  No & Yes & No &  No & Yes \\
+DoW FE         &  No &  No & Yes & No &  No & Yes \\
+R-squared      & 0.000 & 0.155 & 0.168 & 0.000 & 0.104 & 0.107 \\
+Adj.\ R-squared& $-$0.002 & 0.146 & 0.145 & $-$0.000 & 0.102 & 0.102 \\
+N              & 443 & 399 & 399 & 3{,}807 & 2{,}928 & 2{,}928 \\
+\bottomrule\bottomrule
+\end{tabular*}
+
+\begin{minipage}{\textwidth}
+\begin{tablenotes}[flushleft,para]
+\footnotesize
+\setlength{\parskip}{2pt} % a bit more breathing room
+
+\textit{Notes}: This table presents pooled regression results for the intraday impact of ECB communication tone. The dependent variable is the high-frequency return for the seven core assets, pooled across assets. The main independent variable is the standardized tone (z-score). Coefficients are shown with two-way clustered standard errors (event date $\times$ asset) in parentheses. 
+Columns (2)–(3) and (5)–(6) include monetary policy surprise factors (Target, Forward Guidance, QE) constructed via PCA; factors are built from the high frequency dataset provided by \cite{Istrefi2024} following the methodology for factor construction by \cite{Swanson2021}. The specification estimated separately by channel $k\in\{\mathrm{ACC},\mathrm{SPEECH}\}$ is:
+
+\begin{equation}
+{\setlength{\jot}{1ex}
+\begin{aligned}
+\Delta y^{(k)}_{a,e}
+&= \alpha_a \;+\; \beta^{(k)}\,\mathrm{tone}^{(k)}_{e} \;+\; \Theta^{\prime} F^{(k)}_{e} \;+\; \phi\,\Delta\mathrm{VSTOXX}^{\mathrm{pre}}_{e} \\
+&\quad \;+\; \gamma^{\prime}\mathrm{DoW}_{e} \;+\; \chi\,\mathbf{1}\{\mathrm{Pres}\}_{e} \;+\; \varepsilon_{a,e},
+\end{aligned}}
+\tag{a}
+\end{equation}
+
+\noindent \textbf{***}, \textbf{**}, and \textbf{*} denote significance at the 1\%, 5\%, and 10\% levels, respectively.
+\end{tablenotes}
+\end{minipage}
+\end{threeparttable}
+\end{table}
+
+%====================================================================================
+
+\clearpage
+\subsection{Daily Regression Results: MPD and PC}
+
+%=========================================================%
+% ======= TABLE: Baseline vs. Tone×CISS (MPD & PC) ======= %
+\begingroup
+\renewcommand{\arraystretch}{1.22}  
+
+
+\providecommand{\sym}[1]{\ifmmode^{#1}\else\(^{#1}\)\fi}
+
+
+\makeatletter
+\@ifundefined{estv}{%
+  
+  \newcommand{\estv}[3]{%
+    \makecell[c]{%
+      \if\relax\detokenize{#3}\relax
+        #1\\[1pt](#2)%
+      \else
+        \textbf{#1}\sym{#3}\\[1pt](#2)%
+      \fi}}
+}{%
+  
+  \let\estv@saved\estv
+  \renewcommand{\estv}[3]{%
+    \makecell[c]{%
+      \if\relax\detokenize{#3}\relax
+        #1\\[1pt](#2)%
+      \else
+        \textbf{#1}\sym{#3}\\[1pt](#2)%
+      \fi}}
+}
+\makeatother
+
+\begin{table}[htbp]
+\centering
+\caption{Daily pooled regressions by channel: baseline vs.\ Tone $\times$ CISS}
+\label{tab:daily_merge_mpd_pc}
+\begin{threeparttable}
+\setlength{\tabcolsep}{7.5pt}
+
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} l cc cc}
+\toprule\toprule
+ & \multicolumn{2}{c}{\textbf{MPD}} & \multicolumn{2}{c}{\textbf{PC}} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}
+ & (1) Baseline & (2) + CISS \& int. & (3) Baseline & (4) + CISS \& int. \\
+\midrule
+Intercept
+& \estv{+0.079}{1.556}{}
+& \estv{$-0.220$}{2.338}{}
+& \estv{+0.325}{1.558}{}
+& \estv{$-1.264$}{2.223}{} \\
+\addlinespace[3pt]
+
+Tone (z)
+& \estv{+0.092}{0.232}{}
+& \estv{+0.105}{0.748}{}
+& \estv{+0.230}{0.234}{}
+& \estv{+0.201}{0.575}{} \\
+\addlinespace[3pt]
+
+CISS (z)
+& \multicolumn{1}{c}{\textemdash}
+& \estv{$-0.341$}{0.476}{}
+& \multicolumn{1}{c}{\textemdash}
+& \estv{+0.098}{0.385}{} \\
+\addlinespace[3pt]
+
+Tone $\times$ CISS (z)
+& \multicolumn{1}{c}{\textemdash}
+& \estv{$-0.271$}{0.740}{}
+& \multicolumn{1}{c}{\textemdash}
+& \estv{+0.382}{0.400}{} \\
+\addlinespace[6pt]
+
+Target factor
+& \estv{+0.059}{0.437}{}
+& \estv{+1.037}{1.946}{}
+& \estv{+0.167}{0.244}{}
+& \estv{+0.102}{0.654}{}
+\\ \addlinespace[3pt]
+
+FG factor
+& \estv{+0.507}{0.444}{}
+& \estv{+1.521}{1.674}{}
+& \estv{$-0.119$}{0.335}{}
+& \estv{+0.117}{1.009}{}
+\\ \addlinespace[3pt]
+
+QE factor
+& \estv{+0.739}{0.424}{}
+& \estv{+2.166}{1.285}{}
+& \estv{+0.391}{0.336}{}
+& \estv{+0.668}{1.028}{}
+\\ \addlinespace[3pt]
+
+$\Delta$VSTOXX
+& \estv{\textbf{+1.140}}{0.100}{***}
+& \estv{\textbf{+1.106}}{0.266}{***}
+& \estv{\textbf{+1.164}}{0.095}{***}
+& \estv{\textbf{+1.080}}{0.166}{***}
+\\
+\midrule
+DoW FE        & Yes & Yes & Yes & Yes \\
+Month FE      & Yes & Yes & Yes & Yes \\
+Asset FE      & Yes & Yes & Yes & Yes \\
+$R^{2}$       & 0.226 & 0.264 & 0.223 & 0.253 \\
+Adj.\ $R^{2}$ & 0.199 & 0.193 & 0.196 & 0.181 \\
+$N$           & 640 & 240 & 640 & 240 \\
+\bottomrule\bottomrule
+\end{tabular*}
+
+\begin{tablenotes}[flushleft]
+\footnotesize
+\item \textit{Notes}: Pooled daily panel by channel with two specifications per channel. Columns (1) and (3) are the \textbf{baseline} with standardized tone (z), the three daily PCA policy–news factors (Target, Forward Guidance, QE), and $\Delta$VSTOXX; columns (2) and (4) add standardized \textbf{CISS} and the \textbf{Tone$\times$CISS} interaction. Day-of-week, month, and asset fixed effects are included. Standard errors two-way clustered by date and asset; SEs shown in parentheses under coefficients. \textbf{Bold} coefficients are statistically significant; \sym{*}, \sym{**}, \sym{***} denote significance at the 10\%, 5\%, and 1\% levels.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+% If we saved a global \estv above, restore it automatically when group ends
+\endgroup
+%=========================================================%
+
+
+
+\clearpage
+\subsection{By Asset Regression Results - Daily Frequency}
+
+% ========================= BY-ASSET DAILY =========================
+\begingroup
+\renewcommand{\arraystretch}{1.28} 
+\setlength{\tabcolsep}{6pt}
+
+
+\providecommand{\sym}[1]{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\newcommand{\estp}[3]{%
+  \if\relax\detokenize{#3}\relax
+    #1\,(#2)%
+  \else
+    \textbf{#1}\sym{#3}\,(#2)%
+  \fi}
+\newcommand{\tightc}[1]{\smash{\raisebox{0pt}[0pt][0pt]{#1}}}
+
+\begin{table}[!htbp]
+\centering
+\caption{Daily by–asset regressions with PCA factors by channel}
+\label{tab:daily_byasset_4panels_inlineSE_nomacro}
+\begin{threeparttable}
+
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}lcccccc@{}}
+\toprule\toprule
+ & EUROSTOXX & EURUSD & GOVY\_2Y & GOVY\_10Y & IT\_DE\_FUT\_SPREAD & HY\_IG\_SPREAD \\
+\midrule
+\multicolumn{7}{l}{\textbf{Panel A: Press Release (MPD)}}\\
+Intercept      & \estp{+0.003}{0.006}{} & \estp{+0.002}{0.006}{} & \estp{-0.018}{0.032}{} & \estp{+0.010}{0.039}{} & \estp{+0.457}{0.657}{} & \estp{-0.801}{3.979}{} \\
+Tone (z)       & \estp{+0.001}{0.001}{} & \estp{-0.001}{0.001}{} & \estp{-0.001}{0.005}{} & \estp{-0.002}{0.006}{} & \estp{-0.079}{0.105}{} & \estp{+0.265}{0.639}{} \\
+Target factor  & \estp{-0.002}{0.002}{} & \estp{-0.000}{0.002}{} & \estp{+0.002}{0.010}{} & \estp{+0.016}{0.012}{} & \estp{-0.169}{0.199}{} & \estp{-0.105}{1.203}{} \\
+FG factor      & \estp{+0.001}{0.002}{} & \estp{-0.002}{0.002}{} & \estp{-0.014}{0.010}{} & \estp{+0.006}{0.012}{} & \estp{+0.207}{0.202}{} & \estp{+1.271}{1.221}{} \\
+QE factor      & \estp{-0.001}{0.002}{} & \estp{-0.000}{0.002}{} & \estp{+0.028}{0.009}{***} & \estp{+0.028}{0.011}{**} & \estp{-0.310}{0.193}{} & \estp{+2.162}{1.166}{*} \\
+$\Delta$VSTOXX & \estp{\textbf{-0.007}}{0.000}{***} & \estp{-0.000}{0.000}{} & \estp{+0.001}{0.002}{} & \estp{+0.000}{0.003}{} & \estp{\textbf{-0.258}}{0.046}{***} & \estp{\textbf{+3.717}}{0.276}{***} \\
+\addlinespace[3pt]
+$R^2$          & \tightc{0.863} & \tightc{0.175} & \tightc{0.527} & \tightc{0.284} & \tightc{0.566} & \tightc{0.793} \\
+$N$            & \tightc{80}    & \tightc{80}    & \tightc{80}    & \tightc{80}    & \tightc{80}    & \tightc{80} \\
+\addlinespace[4pt]
+\midrule
+
+\multicolumn{7}{l}{\textbf{Panel B: Press Conference (PC)}}\\
+Intercept      & \estp{-0.000}{0.006}{} & \estp{+0.003}{0.006}{} & \estp{+0.001}{0.035}{} & \estp{+0.022}{0.032}{} & \estp{+0.498}{0.710}{} & \estp{-0.101}{4.090}{} \\
+Tone (z)       & \estp{-0.001}{0.001}{} & \estp{-0.000}{0.001}{} & \estp{+0.012}{0.006}{**} & \estp{+0.009}{0.005}{*} & \estp{-0.096}{0.115}{} & \estp{+0.614}{0.662}{} \\
+Target factor  & \estp{+0.001}{0.001}{} & \estp{+0.002}{0.001}{**} & \estp{+0.002}{0.006}{} & \estp{+0.010}{0.005}{*} & \estp{+0.143}{0.120}{} & \estp{+0.505}{0.689}{} \\
+FG factor      & \estp{+0.001}{0.001}{} & \estp{-0.001}{0.001}{} & \estp{-0.007}{0.008}{} & \estp{+0.004}{0.007}{} & \estp{-0.119}{0.164}{} & \estp{-0.317}{0.947}{} \\
+QE factor      & \estp{-0.002}{0.001}{} & \estp{+0.002}{0.001}{} & \estp{+0.021}{0.008}{**} & \estp{+0.038}{0.007}{***} & \estp{+0.065}{0.165}{} & \estp{+1.249}{0.949}{} \\
+$\Delta$VSTOXX & \estp{\textbf{-0.007}}{0.000}{***} & \estp{+0.000}{0.000}{} & \estp{+0.005}{0.002}{**} & \estp{+0.004}{0.002}{**} & \estp{\textbf{-0.316}}{0.047}{***} & \estp{\textbf{+3.797}}{0.269}{***} \\
+\addlinespace[3pt]
+$R^2$          & \tightc{0.862} & \tightc{0.294} & \tightc{0.438} & \tightc{0.526} & \tightc{0.491} & \tightc{0.780} \\
+$N$            & \tightc{80}    & \tightc{80}    & \tightc{80}    & \tightc{80}    & \tightc{80}    & \tightc{80} \\
+\addlinespace[4pt]
+\midrule
+
+\multicolumn{7}{l}{\textbf{Panel C: Monetary Policy Accounts (ACC)}}\\
+Intercept      & \estp{-0.002}{0.002}{} & \estp{+0.001}{0.002}{} & \estp{+0.016}{0.013}{} & \estp{+0.023}{0.014}{} & \estp{-0.036}{0.169}{} & \estp{+2.328}{3.152}{} \\
+Tone (z)       & \estp{-0.000}{0.001}{} & \estp{+0.001}{0.001}{} & \estp{+0.011}{0.005}{**} & \estp{+0.007}{0.006}{} & \estp{+0.161}{0.069}{**} & \estp{+1.082}{1.285}{} \\
+Target factor  & \estp{+0.001}{0.001}{} & \estp{+0.000}{0.001}{} & \estp{+0.014}{0.006}{**} & \estp{+0.017}{0.006}{***} & \estp{+0.204}{0.074}{***} & \estp{-0.901}{1.375}{} \\
+FG factor      & \estp{+0.000}{0.001}{} & \estp{-0.001}{0.001}{**} & \estp{-0.001}{0.005}{} & \estp{-0.001}{0.005}{} & \estp{+0.031}{0.065}{} & \estp{-0.362}{1.218}{} \\
+QE factor      & \estp{+0.000}{0.001}{} & \estp{-0.000}{0.001}{} & \estp{-0.007}{0.005}{} & \estp{-0.005}{0.006}{} & \estp{+0.078}{0.070}{} & \estp{-0.606}{1.296}{} \\
+$\Delta$VSTOXX & \estp{\textbf{-0.007}}{0.001}{***} & \estp{-0.001}{0.001}{} & \estp{-0.001}{0.006}{} & \estp{-0.004}{0.006}{} & \estp{-0.092}{0.074}{} & \estp{\textbf{+3.963}}{1.385}{***} \\
+\addlinespace[3pt]
+$R^2$          & \tightc{0.797} & \tightc{0.356} & \tightc{0.322} & \tightc{0.330} & \tightc{0.323} & \tightc{0.287} \\
+$N$            & \tightc{57}    & \tightc{57}    & \tightc{57}    & \tightc{57}    & \tightc{57}    & \tightc{57} \\
+\addlinespace[4pt]
+\midrule
+
+\multicolumn{7}{l}{\textbf{Panel D: Speeches (SPEECH)}}\\
+Intercept      & \estp{-0.001}{0.001}{} & \estp{-0.000}{0.001}{} & \estp{+0.008}{0.008}{} & \estp{+0.013}{0.009}{} & \estp{+0.040}{0.156}{} & \estp{-0.996}{1.180}{} \\
+Tone (z)       & \estp{-0.001}{0.000}{**} & \estp{+0.000}{0.000}{} & \estp{-0.001}{0.002}{} & \estp{-0.001}{0.002}{} & \estp{+0.007}{0.038}{} & \estp{+0.363}{0.290}{} \\
+Target factor  & \estp{-0.000}{0.000}{} & \estp{+0.000}{0.000}{} & \estp{+0.002}{0.002}{} & \estp{+0.005}{0.002}{**} & \estp{-0.007}{0.033}{} & \estp{+0.356}{0.250}{*} \\
+FG factor      & \estp{+0.000}{0.000}{} & \estp{-0.001}{0.000}{**} & \estp{-0.003}{0.002}{*} & \estp{+0.004}{0.002}{**} & \estp{+0.031}{0.035}{} & \estp{+0.483}{0.263}{*} \\
+QE factor      & \estp{-0.001}{0.000}{*} & \estp{+0.000}{0.000}{} & \estp{+0.006}{0.002}{***} & \estp{+0.010}{0.002}{***} & \estp{+0.016}{0.034}{} & \estp{+0.541}{0.258}{**} \\
+$\Delta$VSTOXX & \estp{\textbf{-0.005}}{0.000}{***} & \estp{-0.000}{0.000}{} & \estp{-0.001}{0.001}{} & \estp{-0.003}{0.001}{**} & \estp{\textbf{-0.078}}{0.022}{***} & \estp{\textbf{+2.162}}{0.165}{***} \\
+\addlinespace[3pt]
+$R^2$          & \tightc{0.629} & \tightc{0.079} & \tightc{0.117} & \tightc{0.115} & \tightc{0.049} & \tightc{0.380} \\
+$N$            & \tightc{376}   & \tightc{376}   & \tightc{376}   & \tightc{376}   & \tightc{376}   & \tightc{375} \\
+\midrule\midrule
+\end{tabular}
+}% end resizebox
+
+\begin{tablenotes}[flushleft]
+\begin{minipage}{0.98\textwidth}
+\footnotesize
+\textit{Notes}: This table reports the results of asset–by–asset daily regressions for each channel using the estimated coefficients with one–way clustering by date. Regressors include standardized tone ($z$), PCA policy–news factors (Target, Forward Guidance, QE), and $\Delta$VSTOXX. Standard errors are shown in parentheses. Stars denote $p$–values from the clustered SEs: \textbf{***} 1\%, \textbf{**} 5\%, \textbf{*} 10\%.
+\end{minipage}
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+\endgroup
+
+% ========================================================================================== %
+
+\clearpage
+\subsection{Intraday Pooled Regressions (Alternative Dictionary)}
+
+\begin{table}[h]
+\centering
+\caption{Intraday Pooled Regressions (Alt. Dictionary)}
+\label{app:altdict_intraday_pooled}
+\begin{threeparttable}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lcccc}
+\toprule \toprule
+ & \textbf{MPD} & \textbf{PC} & \textbf{ACC} & \textbf{SPEECH} \\
+\midrule
+Intercept         & +0.419  & +0.039  & +0.016  & $-$0.002 \\
+                  & [1.023] & [0.584] & [0.095] & [0.084] \\
+Alt tone (z)      & +0.051  & $-$0.123 & +0.031  & $-$0.031 \\
+                  & [0.118] & [0.104] & [0.039] & [0.026] \\
+Target factor     & \textbf{+0.753}$^{***}$ & +0.095 & +0.043 & \textbf{+0.117}$^{***}$ \\
+                  & [0.201] & [0.104] & [0.039] & [0.029] \\
+FG factor         & \textbf{$-$0.627}$^{**}$ & \textbf{$-$0.296}$^{*}$ & $-$0.051 & \textbf{$-$0.130}$^{***}$ \\
+                  & [0.203] & [0.146] & [0.037] & [0.029] \\
+QE factor         & \textbf{+0.703}$^{***}$ & \textbf{+0.691}$^{***}$ & \textbf{+0.273}$^{***}$ & \textbf{+0.285}$^{***}$ \\
+                  & [0.183] & [0.148] & [0.038] & [0.027] \\
+$\Delta$VSTOXX & +0.086  & +0.040  & $-$0.184 & +0.007 \\
+                  & [0.194] & [0.217] & [0.116] & [0.008] \\
+\midrule
+Asset FE          & Yes     & Yes     & Yes     & Yes     \\
+DoW FE            & Yes     & Yes     & Yes     & Yes     \\
+R-squared         & 0.278   & 0.144   & 0.174   & 0.112   \\
+Adj. R-squared    & 0.260   & 0.125   & 0.148   & 0.106   \\
+N                 & 490     & 560     & 399     & 2053    \\
+\bottomrule \bottomrule
+\end{tabular}%
+}
+\begin{tablenotes}[flushleft]
+\begin{minipage}{0.98\textwidth}
+\footnotesize
+\textit{Notes}: This table reports intraday regressions based on the alternative dictionary tone lexicons developed by \cite{Tadle2022} for Federal Reserve communications. The dependent variable is the asset return around the policy communication event. All specifications include asset and day-of-week fixed effects, and use two-way clustered standard errors (by date and asset). Bold coefficients are statistically significant at the 10\% ($^{*}$), 5\% ($^{**}$), and 1\% ($^{***}$) levels.
+\end{minipage}
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+% ========================================================================================== %
+
+\clearpage
+\subsection{By–Asset Intraday Regressions (Alternative Dictionary)}
+
+\begingroup
+\renewcommand{\arraystretch}{1.28}          
+\setlength{\tabcolsep}{6pt}                 
+
+% stars + inline coef(SE); bold when starred
+\providecommand{\sym}[1]{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\newcommand{\estp}[3]{%
+  \if\relax\detokenize{#3}\relax
+    #1\,(#2)%
+  \else
+    \textbf{#1}\sym{#3}\,(#2)%
+  \fi}
+\newcommand{\tightc}[1]{\smash{\raisebox{0pt}[0pt][0pt]{#1}}}
+
+\begin{table}[!htbp]
+\centering
+\caption{Intraday by–asset regressions (Alt.\ dictionary) by channel}
+\label{app:altdict_byasset_4panels_inlineSE_intraday}
+\begin{threeparttable}
+
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}lccccccc@{}}
+\toprule\toprule
+ & EUROSTOXX & EURUSD & OIS\_1M & OIS\_3M & OIS\_2Y & OIS\_10Y & IT\_DE\_10Y\_SPREAD \\
+\midrule
+\multicolumn{8}{l}{\textbf{Panel A: Press Release (MPD)}}\\
+Alt tone (z)     & \estp{$-0.007$}{0.053}{} & \estp{+0.021}{0.032}{} & \estp{$-0.015$}{0.051}{} & \estp{$-0.043$}{0.077}{} & \estp{$-0.082$}{0.080}{} & \estp{+0.065}{0.072}{} & \estp{+0.334}{0.475}{} \\
+Target Factor          & \estp{$-0.294$}{0.085}{***} & \estp{+0.006}{0.054}{} & \estp{+3.082}{0.087}{***} & \estp{+0.593}{0.130}{***} & \estp{$-0.599$}{0.136}{***} & \estp{+0.452}{0.123}{***} & \estp{+2.062}{0.783}{**} \\
+FG Factor              & \estp{$-0.180$}{0.086}{**}  & \estp{$-0.042$}{0.055}{} & \estp{+0.003}{0.087}{}   & \estp{$-2.707$}{0.131}{***} & \estp{$-2.682$}{0.137}{***} & \estp{$-0.053$}{0.126}{} & \estp{+1.372}{0.797}{*} \\
+QE Factor              & \estp{$-0.373$}{0.078}{***} & \estp{+0.108}{0.049}{**} & \estp{+0.013}{0.079}{}   & \estp{$-1.526$}{0.119}{***} & \estp{+1.457}{0.124}{***} & \estp{+2.444}{0.111}{***} & \estp{+2.883}{0.722}{***} \\
+$\Delta$VSTOXX   & \estp{+0.033}{0.090}{} & \estp{+0.105}{0.161}{} & \estp{+0.140}{0.230}{} & \estp{$-0.040$}{0.077}{} & \estp{$-0.099$}{0.117}{} & \estp{+0.116}{0.094}{} & \estp{+1.427}{1.833}{} \\
+\addlinespace[3pt]
+$R^2$            & \tightc{0.332} & \tightc{0.244} & \tightc{0.986} & \tightc{0.967} & \tightc{0.972} & \tightc{0.954} & \tightc{0.258} \\
+$N$              & \tightc{70}    & \tightc{70}    & \tightc{70}    & \tightc{70}    & \tightc{70}    & \tightc{70}    & \tightc{70} \\
+\addlinespace[6pt]
+\midrule
+
+\multicolumn{8}{l}{\textbf{Panel B: Press Conference (PC)}}\\
+Alt tone (z)     & \estp{+0.142}{0.075}{*} & \estp{$-0.024$}{0.047}{} & \estp{$-0.003$}{0.011}{} & \estp{$-0.003$}{0.020}{} & \estp{+0.028}{0.078}{} & \estp{+0.017}{0.130}{} & \estp{$-0.736$}{0.655}{} \\
+Target Factor          & \estp{$-0.071$}{0.071}{} & \estp{+0.126}{0.045}{***} & \estp{+0.376}{0.010}{***} & \estp{+0.146}{0.020}{***} & \estp{$-0.168$}{0.076}{**} & \estp{+0.710}{0.131}{***} & \estp{$-0.556$}{0.596}{} \\
+FG Factor              & \estp{+0.081}{0.099}{} & \estp{$-0.075$}{0.064}{} & \estp{$-0.002$}{0.015}{} & \estp{$-1.063$}{0.028}{***} & \estp{$-0.639$}{0.108}{***} & \estp{$-0.007$}{0.183}{} & \estp{$-0.312$}{0.819}{} \\
+QE Factor              & \estp{$-0.188$}{0.099}{*} & \estp{+0.251}{0.064}{***} & \estp{$-0.002$}{0.015}{} & \estp{$-0.460$}{0.028}{***} & \estp{+2.381}{0.108}{***} & \estp{+3.028}{0.184}{***} & \estp{$-0.210$}{0.826}{} \\
+$\Delta$VSTOXX   & \estp{$-0.175$}{0.177}{} & \estp{$-0.006$}{0.269}{} & \estp{$-0.031$}{0.032}{} & \estp{+0.083}{0.025}{***} & \estp{$-0.363$}{0.188}{*} & \estp{+0.093}{0.203}{} & \estp{$-2.174$}{3.577}{} \\
+\addlinespace[3pt]
+$R^2$            & \tightc{0.190} & \tightc{0.438} & \tightc{0.949} & \tightc{0.960} & \tightc{0.955} & \tightc{0.887} & \tightc{0.047} \\
+$N$              & \tightc{80}    & \tightc{80}    & \tightc{80}    & \tightc{80}    & \tightc{80}    & \tightc{80}    & \tightc{80} \\
+\addlinespace[6pt]
+\midrule
+
+\multicolumn{8}{l}{\textbf{Panel C: Monetary Policy Accounts (ACC)}}\\
+Alt tone (z)     & \estp{$-0.023$}{0.024}{} & \estp{+0.032}{0.023}{} & \estp{+0.002}{0.004}{} & \estp{$-0.001$}{0.004}{} & \estp{+0.029}{0.050}{} & \estp{$-0.022$}{0.077}{} & \estp{+0.186}{0.202}{} \\
+Target Factor         & \estp{+0.030}{0.024}{} & \estp{+0.020}{0.023}{} & \estp{+0.155}{0.004}{***} & \estp{+0.006}{0.004}{} & \estp{$-0.012$}{0.051}{} & \estp{+0.219}{0.082}{***} & \estp{$-0.002$}{0.213}{} \\
+FG Factor              & \estp{+0.022}{0.023}{} & \estp{$-0.006$}{0.022}{} & \estp{$-0.001$}{0.004}{} & \estp{$-0.408$}{0.004}{***} & \estp{+0.015}{0.049}{} & \estp{+0.005}{0.073}{} & \estp{+0.067}{0.198}{} \\
+QE Factor              & \estp{$-0.040$}{0.024}{*} & \estp{+0.068}{0.022}{***} & \estp{$-0.001$}{0.004}{} & \estp{$-0.006$}{0.004}{} & \estp{+0.840}{0.049}{***} & \estp{+0.859}{0.073}{***} & \estp{+0.193}{0.198}{} \\
+$\Delta$VSTOXX   & \estp{$-0.035$}{0.097}{} & \estp{$-0.227$}{0.099}{**} & \estp{+0.015}{0.016}{} & \estp{+0.020}{0.028}{} & \estp{$-0.175$}{0.122}{} & \estp{+0.023}{0.152}{} & \estp{$-1.908$}{1.536}{} \\
+\addlinespace[3pt]
+$R^2$            & \tightc{0.295} & \tightc{0.303} & \tightc{0.968} & \tightc{0.996} & \tightc{0.868} & \tightc{0.790} & \tightc{0.074} \\
+$N$              & \tightc{57}    & \tightc{57}    & \tightc{57}    & \tightc{57}    & \tightc{57}    & \tightc{57}    & \tightc{57} \\
+\addlinespace[6pt]
+\midrule
+
+\multicolumn{8}{l}{\textbf{Panel D: Speeches (SPEECH)}}\\
+Alt tone (z)     & \estp{+0.046}{0.025}{*} & \estp{$-0.003$}{0.012}{} & \estp{$-0.003$}{0.010}{} & \estp{+0.034}{0.020}{*} & \estp{$-0.031$}{0.043}{} & \estp{+0.003}{0.062}{} & \estp{$-0.220$}{0.144}{} \\
+Target Factor          & \estp{+0.101}{0.035}{***} & \estp{$-0.021$}{0.013}{} & \estp{+0.289}{0.009}{***} & \estp{$-0.025$}{0.022}{} & \estp{+0.109}{0.047}{**} & \estp{+0.116}{0.063}{*} & \estp{$-0.023$}{0.199}{} \\
+FG Factor              & \estp{$-0.001$}{0.034}{} & \estp{$-0.040$}{0.013}{***} & \estp{$-0.006$}{0.008}{} & \estp{$-0.503$}{0.024}{***} & \estp{$-0.269$}{0.051}{***} & \estp{+0.046}{0.064}{} & \estp{$-0.257$}{0.171}{} \\
+QE Factor              & \estp{$-0.054$}{0.028}{*} & \estp{$-0.009$}{0.012}{} & \estp{+0.007}{0.009}{} & \estp{$-0.258$}{0.022}{***} & \estp{+0.811}{0.049}{***} & \estp{+1.374}{0.066}{***} & \estp{+0.009}{0.149}{} \\
+$\Delta$VSTOXX   & \estp{+0.007}{0.003}{**} & \estp{$-0.054$}{0.048}{} & \estp{$-0.087$}{0.042}{**} & \estp{$-0.040$}{0.088}{} & \estp{$-0.044$}{0.103}{} & \estp{+0.065}{0.135}{} & \estp{$-0.520$}{0.507}{} \\
+\addlinespace[3pt]
+$R^2$            & \tightc{0.087} & \tightc{0.048} & \tightc{0.815} & \tightc{0.679} & \tightc{0.655} & \tightc{0.612} & \tightc{0.025} \\
+$N$              & \tightc{221}   & \tightc{354}   & \tightc{282}   & \tightc{287}   & \tightc{315}   & \tightc{323}   & \tightc{271} \\
+\midrule\midrule
+\end{tabular}
+}% end resizebox
+
+\begin{tablenotes}[flushleft]
+\begin{minipage}{0.98\textwidth}
+\footnotesize
+\textit{Notes}: This table reports the by-asset regression results based on the alternative dictionary lexicons developed by \cite{Tadle2022} for Federal Reserve Communications. All specifications include asset fixed effects and day-of-week fixed effects. 
+\textbf{Bold} coefficients are statistically significant at the 10\% ($^{*}$), 5\% ($^{**}$), and 1\% ($^{***}$) levels. 
+\end{minipage}
+\end{tablenotes}
+
+\end{threeparttable}
+\end{table}
+\endgroup
+
+%================================================================================================================================================================%
+
+\clearpage
+\subsection{Intraday by–asset regressions with orthogonalised tone}
+
+\begingroup
+\renewcommand{\arraystretch}{1.22}
+\setlength{\tabcolsep}{6pt}
+
+% stars + inline coef(SE); bold when starred
+\providecommand{\sym}[1]{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\newcommand{\estp}[3]{%
+  \if\relax\detokenize{#3}\relax
+    #1\,[#2]%
+  \else
+    \textbf{#1}\sym{#3}\,[#2]%
+  \fi}
+
+\begin{table}[!htbp]
+\centering
+\caption{Intraday by–asset regressions with orthogonalised tone by channel}
+\label{tab:intraday_byasset_orthotone}
+\begin{threeparttable}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}lccccccc@{}}
+\toprule\toprule
+ & EUROSTOXX & EURUSD & OIS\_1M & OIS\_3M & OIS\_2Y & OIS\_10Y & IT\_DE\_10Y\_SPREAD \\
+\midrule
+\multicolumn{8}{l}{\textbf{Panel A: Press Release (MPD)}}\\
+Orthog.\ tone (z) & \estp{+0.005}{0.044}{} & \estp{+0.010}{0.031}{} & \estp{$-$0.009}{0.044}{} & \estp{$-$0.049}{0.066}{} & \estp{$-$0.070}{0.069}{} & \estp{+0.046}{0.062}{} & \estp{+0.345}{0.393}{} \\
+Target factor     & \estp{$-$0.313}{0.080}{***} & \estp{+0.039}{0.057}{} & \estp{+3.073}{0.080}{***} & \estp{+0.594}{0.121}{***} & \estp{$-$0.606}{0.125}{***} & \estp{+0.497}{0.112}{***} & \estp{+2.015}{0.713}{***} \\
+FG factor         & \estp{$-$0.179}{0.081}{**} & \estp{$-$0.041}{0.058}{} & \estp{$-$0.002}{0.081}{} & \estp{$-$2.713}{0.123}{***} & \estp{$-$2.697}{0.128}{***} & \estp{+0.001}{0.115}{} & \estp{+1.274}{0.728}{*} \\
+QE factor         & \estp{$-$0.390}{0.073}{***} & \estp{+0.135}{0.052}{**} & \estp{$-$0.002}{0.073}{} & \estp{$-$1.515}{0.111}{***} & \estp{+1.450}{0.115}{***} & \estp{+2.477}{0.103}{***} & \estp{+2.757}{0.655}{***} \\
+\addlinespace[3pt]
+$N$               & 80 & 80 & 80 & 80 & 80 & 80 & 80 \\
+$R^2$             & 0.357 & 0.255 & 0.986 & 0.967 & 0.972 & 0.953 & 0.254 \\
+\addlinespace[4pt]
+\midrule
+
+\multicolumn{8}{l}{\textbf{Panel B: Press Conference (PC)}}\\
+Orthog.\ tone (z) & \estp{+0.135}{0.068}{**} & \estp{$-$0.047}{0.044}{} & \estp{$-$0.003}{0.010}{} & \estp{+0.007}{0.021}{} & \estp{$-$0.010}{0.076}{} & \estp{+0.035}{0.127}{} & \estp{$-$0.893}{0.568}{} \\
+Target factor     & \estp{$-$0.077}{0.068}{} & \estp{+0.130}{0.044}{***} & \estp{+0.376}{0.010}{***} & \estp{+0.144}{0.021}{***} & \estp{$-$0.168}{0.076}{**} & \estp{+0.715}{0.127}{***} & \estp{$-$0.314}{0.572}{} \\
+FG factor         & \estp{+0.068}{0.097}{} & \estp{$-$0.075}{0.063}{} & \estp{+0.000}{0.015}{} & \estp{$-$1.064}{0.030}{***} & \estp{$-$0.668}{0.109}{***} & \estp{$-$0.010}{0.183}{} & \estp{$-$0.327}{0.816}{} \\
+QE factor         & \estp{$-$0.192}{0.098}{*} & \estp{+0.251}{0.063}{***} & \estp{+0.000}{0.015}{} & \estp{$-$0.469}{0.030}{***} & \estp{+2.379}{0.110}{***} & \estp{+3.030}{0.183}{***} & \estp{$-$0.172}{0.822}{} \\
+\addlinespace[3pt]
+$N$               & 80 & 80 & 80 & 80 & 80 & 80 & 80 \\
+$R^2$             & 0.193 & 0.444 & 0.948 & 0.954 & 0.953 & 0.887 & 0.039 \\
+\addlinespace[4pt]
+\midrule
+
+\multicolumn{8}{l}{\textbf{Panel C: Monetary Policy Accounts (ACC)}}\\
+Orthog.\ tone (z) & \estp{$-$0.013}{0.022}{} & \estp{+0.036}{0.022}{} & \estp{+0.003}{0.004}{} & \estp{$-$0.002}{0.004}{} & \estp{+0.016}{0.047}{} & \estp{$-$0.027}{0.070}{} & \estp{+0.160}{0.190}{} \\
+Target factor     & \estp{+0.034}{0.023}{} & \estp{+0.014}{0.023}{} & \estp{+0.154}{0.004}{***} & \estp{+0.006}{0.004}{*} & \estp{$-$0.027}{0.049}{} & \estp{+0.219}{0.073}{***} & \estp{$-$0.121}{0.199}{} \\
+FG factor         & \estp{+0.018}{0.023}{} & \estp{$-$0.005}{0.022}{} & \estp{+0.000}{0.004}{} & \estp{$-$0.409}{0.004}{***} & \estp{+0.028}{0.048}{} & \estp{+0.000}{0.070}{} & \estp{+0.040}{0.193}{} \\
+QE factor         & \estp{$-$0.041}{0.023}{*} & \estp{+0.070}{0.023}{***} & \estp{$-$0.000}{0.004}{} & \estp{$-$0.007}{0.004}{*} & \estp{+0.848}{0.049}{***} & \estp{+0.858}{0.072}{***} & \estp{+0.198}{0.198}{} \\
+\addlinespace[3pt]
+$N$               & 57 & 57 & 57 & 57 & 57 & 57 & 57 \\
+$R^2$             & 0.285 & 0.231 & 0.967 & 0.996 & 0.863 & 0.790 & 0.045 \\
+\addlinespace[4pt]
+\midrule
+
+\multicolumn{8}{l}{\textbf{Panel D: Speeches (SPEECH)}}\\
+Orthog.\ tone (z) & \estp{+0.035}{0.021}{*} & \estp{$-$0.010}{0.010}{} & \estp{$-$0.001}{0.008}{} & \estp{+0.025}{0.016}{} & \estp{$-$0.010}{0.036}{} & \estp{+0.010}{0.046}{} & \estp{$-$0.108}{0.106}{} \\
+Target factor     & \estp{+0.037}{0.025}{} & \estp{$-$0.013}{0.011}{} & \estp{+0.306}{0.008}{***} & \estp{+0.049}{0.017}{***} & \estp{+0.088}{0.040}{**} & \estp{+0.127}{0.051}{**} & \estp{$-$0.021}{0.119}{} \\
+FG factor         & \estp{$-$0.018}{0.029}{} & \estp{$-$0.043}{0.012}{***} & \estp{$-$0.005}{0.009}{} & \estp{$-$0.359}{0.019}{***} & \estp{$-$0.202}{0.044}{***} & \estp{+0.065}{0.056}{} & \estp{$-$0.211}{0.138}{} \\
+QE factor         & \estp{$-$0.035}{0.025}{} & \estp{+0.004}{0.011}{} & \estp{+0.000}{0.008}{} & \estp{$-$0.200}{0.018}{***} & \estp{+0.813}{0.041}{***} & \estp{+1.367}{0.052}{***} & \estp{$-$0.038}{0.124}{} \\
+\addlinespace[3pt]
+$N$               & 361 & 488 & 472 & 473 & 486 & 486 & 457 \\
+$R^2$             & 0.024 & 0.046 & 0.769 & 0.518 & 0.557 & 0.631 & 0.023 \\
+\midrule\midrule
+\end{tabular}
+}
+
+\begin{tablenotes}[flushleft]
+\begin{minipage}{0.985\textwidth}
+\footnotesize
+\textit{Notes}: “Orthog. tone” is constructed within each channel $k\in\{\text{MPD, PC, ACC, SPEECH}\}$ by projecting the event–level
+standardized tone on that channel’s PCA policy factors and taking the residual, which is then re-standardized to unit variance:
+\[
+z^{(k)}_{t} \;=\; \alpha^{(k)} + \Theta^{(k)\prime} F^{(k)}_{t} + \varepsilon^{(k)}_{t},
+\qquad
+\text{tone}^{(k)}_{\perp,t} \;=\; \frac{\varepsilon^{(k)}_{t}}{\operatorname{sd}(\varepsilon^{(k)}_{t})}.
+\]
+Here $t$ indexes event days, $z^{(k)}_{t}$ is the baseline tone (z-score), and $F^{(k)}_{t}=(F_{\text{Target}},F_{\text{FG}},F_{\text{QE}})'$ are the daily
+PCA policy factors computed for channel $k$. The first-stage $R^2$ reports the share of tone variance explained by these factors in the
+projection above (smaller values indicate little linear policy content in tone). Correlations in Panel B are computed across event days
+used to build $z^{(k)}_{t}$. Panel A regressions are estimated on intraday data with asset and day-of-week fixed effects and two-way
+clustered standard errors (event date $\times$ asset). By construction, $\operatorname{corr}(\text{tone}^{(k)}_{\perp,t},F^{(k)}_{t,j})\approx 0$ for each factor $j$, and
+$\operatorname{corr}(z^{(k)}_{t},\text{tone}^{(k)}_{\perp,t})\approx\sqrt{1-R^2}$ when an intercept is included. Bold coefficients denote significance at the
+10\% (*), 5\% (**), and 1\% (***) levels.
+\end{minipage}
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+\endgroup
+
+
+
+%================================================================================================================%
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
