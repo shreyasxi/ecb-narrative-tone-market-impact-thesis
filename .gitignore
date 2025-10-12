@@ -1,0 +1,33 @@
+# --- LaTeX build artifacts ---
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.lot
+*.lof
+*.out
+*.run.xml
+*.synctex.gz
+*.toc
+_build/
+build/
+latexmk/
+
+# --- Jupyter/Python ---
+.ipynb_checkpoints/
+__pycache__/
+*.pyc
+.venv/
+.env
+
+# --- Editors/IDE ---
+.vscode/
+*.code-workspace
+
+# --- OS junk ---
+.DS_Store
+Thumbs.db
+desktop.ini
