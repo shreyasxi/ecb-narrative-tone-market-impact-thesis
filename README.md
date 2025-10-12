@@ -27,21 +27,12 @@ It primarily constitues:
 
 ---
 
-<h2>Key findings</h2>
+## Key findings
 
-<table>
-  <tr>
-    <td><strong>Channel heterogeneity:</strong> Tone has the clearest incremental impact in <strong>policy statements and Accounts</strong>; <strong>press-conference Q&amp;A</strong> shows a selective <strong>equity</strong> response.</td>
-    <td><strong>Asset sensitivity:</strong> <strong>Rates and sovereign spreads</strong> react more than <strong>equities/FX</strong>; equity/FX effects are smaller and less persistent.</td>
-  </tr>
-  <tr>
-    <td><strong>Intraday vs. daily:</strong> Effects peak in <strong>intraday windows</strong>; by the <strong>daily close</strong> most attenuate, with <strong>Accounts/speeches</strong> showing the most persistence.</td>
-    <td><strong>State dependence (CISS):</strong> Tone’s impact <strong>dampens as stress rises</strong> and <strong>strengthens in calmer regimes</strong>.</td>
-  </tr>
-  <tr>
-    <td><strong>Relative to policy news:</strong> <strong>Target/FG/QE</strong> shocks explain most variation; tone adds <strong>incrementally</strong>, clarifying policy intent.</td>
-    <td><strong>Robustness:</strong> Holds with <strong>alternative dictionaries</strong>, <strong>orthogonalized (“policy-free”) tone</strong>, <strong>pre/post-COVID</strong> splits, and <strong>alternative event windows</strong>.</td>
-  </tr>
-</table>
+| | |
+|---|---|
+| **Channel heterogeneity** — Largest in **statements/Accounts**; **Q&A** lifts **equities**. | **Asset sensitivity** — **Rates/spreads** react more than **equities/FX**. |
+| **Intraday vs daily** — Peak near announcements; fade by close; **Accounts/speeches** persist. | **State dependence (CISS)** — Impact falls with stress; stronger when calm. |
+| **Policy vs tone** — **Target/FG/QE** drive most moves; tone adds clarity. | **Robustness** — Holds with **alt dictionaries**, **policy-free tone**, **pre/post-COVID**, **alt windows**. |
 
 
