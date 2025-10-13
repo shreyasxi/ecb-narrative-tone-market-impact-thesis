@@ -95,6 +95,23 @@ It primarily constitues:
 
 ---
 
+## 📚 Citation
+
+If you use this work, please cite the thesis as:
+
+**Urgunde, S. (2025). _The Differential Market Impact of ECB Narrative Tone Across Communication Channels_ (Master’s thesis, Warwick Business School).**  
+Available at: https://shreyasxi.github.io/ecb-narrative-tone-market-impact-thesis/
+
+### BibTeX
+```bibtex
+@mastersthesis{Urgunde2025_ECBTone,
+  author       = {Shreyas Urgunde},
+  title        = {The Differential Market Impact of ECB Narrative Tone Across Communication Channels},
+  school       = {Warwick Business School, University of Warwick},
+  year         = {2025},
+  type         = {Master's Thesis},
+  url          = {https://shreyasxi.github.io/ecb-narrative-tone-market-impact-thesis/}
+}
 
 
 
