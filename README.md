@@ -39,27 +39,27 @@ It primarily constitues:
   <tbody>
     <tr>
       <td><strong>Intraday drivers</strong></td>
-      <td><strong>Policy surprises dominate</strong> high-frequency reactions; tone effects are generally small and statistically weak in pooled intraday tests.</td>
+      <td><strong>Policy surprises dominate</strong> high-frequency reactions; tone effects are generally small and statistically weak.</td>
     </tr>
     <tr>
       <td><strong>Q&amp;A equities</strong></td>
-      <td>During the <strong>press-conference Q&amp;A</strong>, equities show a **modest positive** response to tone; rates do not co-move with tone in this window.</td>
+      <td>During the <strong>press-conference Q&amp;A</strong>, equities show a modest positive response to tone; interest rates do not co-move with tone in this window.</td>
     </tr>
     <tr>
       <td><strong>Daily persistence</strong></td>
-      <td>By the <strong>daily close</strong>, most tone effects **attenuate or vanish**; daily variation is largely absorbed by broad risk conditions.</td>
+      <td>By the daily close, most tone effects attenuate or vanish; daily variation is largely absorbed by broad risk and idiosyncratic factors.</td>
     </tr>
     <tr>
       <td><strong>Accounts × CISS</strong></td>
-      <td>In <strong>Monetary Policy Accounts</strong>, tone is **positive at average stress** but its impact **dampens as systemic stress (CISS) rises**.</td>
+      <td>In <strong>Monetary Policy Accounts</strong>, tone is positive at average stress but its impact dampens as systemic stress (CISS) rises.</td>
     </tr>
     <tr>
       <td><strong>Term-structure pattern</strong></td>
-      <td>Loadings align with textbook intuition: <strong>Target → short rates</strong>, <strong>Forward-Guidance → belly</strong>, <strong>QE → long end &amp; spreads</strong>; equity/FX effects are smaller and more heterogeneous.</td>
+      <td>Loadings align with theoretical intuition: <strong>Target → short rates</strong>, <strong>Forward-Guidance → belly</strong>, <strong>QE → long end &amp; spreads</strong>; equity/FX effects are smaller and more heterogeneous.</td>
     </tr>
     <tr>
       <td><strong>Bottom line</strong></td>
-      <td>Narrative tone matters in <strong>specific contexts</strong> (live Q&amp;A; some Accounts results), but **hard policy signals carry most of the move**.</td>
+      <td>Narrative tone matters in specific contexts, but hard policy signals carry most of the market moves.</td>
     </tr>
   </tbody>
 </table>
