@@ -104,7 +104,7 @@ It primarily constitues:
 
 If you use this work, please cite the thesis as:
 
-**Urgunde, S. (2025). _The Differential Market Impact of ECB Narrative Tone Across Communication Channels_ (Master’s thesis, Warwick Business School).**  
+**Urgunde, S. (2025). _The Differential Market Impact of ECB Narrative Tone Across Communication Channels_. Warwick Business School.**  
 Available at: https://shreyasxi.github.io/ecb-narrative-tone-market-impact-thesis/
 
 ### BibTeX
