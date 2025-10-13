@@ -61,6 +61,15 @@ It primarily constitues:
 
 ---
 
+## 📁 Project Structure
+
+- `Financial Datasets/` — Curated market and rates datasets required to run the analysis (CSV/XLSX).
+- `Research Paper/` — Final paper (**Dissertation.pdf**) and LaTeX source (`dissertation.tex`).
+- `Dissertation.ipynb` — Core analysis notebook with fully reproducible code (tables, figures, regressions).
+- `all_ECB_speeches.csv` — ECB communications dataset (speeches only); other channels were web-scraped directly from the ECB website.
+
+---
+
 
 
 
