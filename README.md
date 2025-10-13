@@ -25,36 +25,41 @@ It primarily constitues:
 - **State dependence:** Interact tone with the ECB CISS to gauge how tone’s impact varies with financial stress.
 - **Robustness & reproducibility:** Verify results with alternative tone dictionaries, orthogonalized (“policy-free”) tone, and subsample analysis (pre/post-COVID).
 
----
+--- 
 
 <h2>💡Key findings</h2>
+
 <table>
   <thead>
     <tr>
-      <th>Topic</th>
+      <th style="width:28%">Topic</th>
       <th>Finding</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td><strong>Channel heterogeneity</strong></td>
-      <td>Strongest incremental effects in <strong>policy statements</strong> and <strong>Accounts</strong>; <strong>press-conference Q&amp;A</strong> shows a selective <strong>equity</strong> response.</td>
+      <td><strong>Intraday drivers</strong></td>
+      <td><strong>Policy surprises dominate</strong> high-frequency reactions; tone effects are generally small and statistically weak in pooled intraday tests.</td>
     </tr>
     <tr>
-      <td><strong>Asset sensitivity</strong></td>
-      <td><strong>Rates &amp; sovereign spreads</strong> react more than <strong>equities/FX</strong>; equity/FX effects are smaller and less persistent.</td>
+      <td><strong>Q&amp;A equities</strong></td>
+      <td>During the <strong>press-conference Q&amp;A</strong>, equities show a **modest positive** response to tone; rates do not co-move with tone in this window.</td>
     </tr>
     <tr>
-      <td><strong>Intraday vs daily</strong></td>
-      <td>Effects peak <strong>around announcements</strong>; by the <strong>daily close</strong> most attenuate, with <strong>Accounts/speeches</strong> showing the most persistence.</td>
+      <td><strong>Daily persistence</strong></td>
+      <td>By the <strong>daily close</strong>, most tone effects **attenuate or vanish**; daily variation is largely absorbed by broad risk conditions.</td>
     </tr>
     <tr>
-      <td><strong>State dependence (CISS)</strong></td>
-      <td>Tone’s impact <strong>dampens as stress rises</strong> and <strong>strengthens in calmer regimes</strong>.</td>
+      <td><strong>Accounts × CISS</strong></td>
+      <td>In <strong>Monetary Policy Accounts</strong>, tone is **positive at average stress** but its impact **dampens as systemic stress (CISS) rises**.</td>
     </tr>
     <tr>
-      <td><strong>Policy news vs tone</strong></td>
-      <td><strong>Target / FG / QE</strong> shocks explain most variation; tone adds <strong>incrementally</strong> by clarifying policy intent.</td>
+      <td><strong>Term-structure pattern</strong></td>
+      <td>Loadings align with textbook intuition: <strong>Target → short rates</strong>, <strong>Forward-Guidance → belly</strong>, <strong>QE → long end &amp; spreads</strong>; equity/FX effects are smaller and more heterogeneous.</td>
+    </tr>
+    <tr>
+      <td><strong>Bottom line</strong></td>
+      <td>Narrative tone matters in <strong>specific contexts</strong> (live Q&amp;A; some Accounts results), but **hard policy signals carry most of the move**.</td>
     </tr>
   </tbody>
 </table>
