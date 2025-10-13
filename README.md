@@ -39,11 +39,11 @@ It primarily constitues:
   <tbody>
     <tr>
       <td><strong>Intraday drivers</strong></td>
-      <td><strong>Policy surprises dominate</strong> high-frequency reactions; tone effects are generally small and statistically weak.</td>
+      <td>Policy surprises dominate high-frequency reactions; tone effects are generally small and statistically weak.</td>
     </tr>
     <tr>
       <td><strong>Q&amp;A equities</strong></td>
-      <td>During the <strong>press-conference Q&amp;A</strong>, equities show a modest positive response to tone; interest rates do not co-move with tone in this window.</td>
+      <td>During the press-conference Q&amp;A, equities show a modest positive response to tone; interest rates do not co-move with tone in this window.</td>
     </tr>
     <tr>
       <td><strong>Daily persistence</strong></td>
@@ -51,7 +51,7 @@ It primarily constitues:
     </tr>
     <tr>
       <td><strong>Accounts × CISS</strong></td>
-      <td>In <strong>Monetary Policy Accounts</strong>, tone is positive at average stress but its impact dampens as systemic stress (CISS) rises.</td>
+      <td>In Monetary Policy Accounts, tone is positive at average stress but its impact dampens as systemic stress (CISS) rises.</td>
     </tr>
     <tr>
       <td><strong>Term-structure pattern</strong></td>
