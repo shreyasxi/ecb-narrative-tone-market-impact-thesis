@@ -71,6 +71,32 @@ It primarily constitues:
 
 ---
 
+## 🔧 Replication guide
+
+### Requirements
+- Python **3.10+**
+- Jupyter (or VS Code with the **Python** + **Jupyter** extensions)
+- Key Packages: `pandas`, `numpy`, `statsmodels`, `scikit-learn`, `matplotlib`, `nltk`, `regex`, `unidecode`
+
+### Setup
+1. **Clone or download** the repo. Keep the folder structure **unchanged** (the notebook expects relative paths like `Financial Datasets/...`, `all_ECB_speeches.csv`, etc).
+   ```bash
+   git clone https://github.com/shreyasxi/ecb-narrative-tone-market-impact-thesis.git
+   cd ecb-narrative-tone-market-impact-thesis
+
+2. Open `Dissertation.ipynb` (in **Jupyter** or **VS Code**).
+
+3. **Run All** (VS Code: `Run ▸ Run All`) to:
+   - load the **ECB text + tone** data,
+   - build the **daily asset panels** and **controls**,
+   - estimate **baseline** and **CISS-interaction** regressions,
+
+**Outputs:** regression summaries, coefficient tables, and figures in `results/` (also referenced in the paper).
+
+---
+
+
+
 
 
 
